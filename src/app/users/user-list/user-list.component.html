@@ -1,0 +1,9 @@
+<user
+  *ngFor='let user of users'
+  [user]="user"
+  [class.edited]="isEdited(user)"
+  (onDelete)="deleteUser($event)">
+</user>
+
+
+
