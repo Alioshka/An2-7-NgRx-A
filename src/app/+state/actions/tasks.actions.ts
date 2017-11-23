@@ -5,6 +5,7 @@ import { Task } from './../../models/task';
 // [Tasks]- namespace
 export const TasksActionTypes = {
   GET_TASKS:   '[Tasks] GET_TASKS',
+  GET_TASK:   '[Tasks] GET_TASK',
   ADD_TASK:    '[Tasks] ADD_TASK',
   EDIT_TASK:   '[Tasks] EDIT_TASK',
   DELETE_TASK: '[Tasks] DELETE_TASK'
@@ -12,6 +13,12 @@ export const TasksActionTypes = {
 
 export class GetTasks implements Action {
   readonly type = TasksActionTypes.GET_TASKS;
+}
+
+export class GetTask implements Action {
+  readonly type = TasksActionTypes.GET_TASK;
+
+  constructor(public payload: Task) { }
 }
 
 export class AddTask implements Action {
@@ -34,6 +41,7 @@ export class DeleteTask implements Action {
 
 export type TasksActions =
   GetTasks |
+  GetTask |
   AddTask |
   EditTask |
   DeleteTask;
