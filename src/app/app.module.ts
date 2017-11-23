@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { TasksModule } from './tasks/tasks.module';
 
@@ -36,7 +37,8 @@ import { MyInterceptor } from './services/interceptors.service';
     HttpClientModule,
     TasksModule,
     AppRoutingModule,
-    StoreModule.forRoot({})
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([])
   ],
   providers: [
     AuthGuard,
