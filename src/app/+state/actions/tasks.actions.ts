@@ -13,6 +13,8 @@ export const TasksActionTypes = {
 
 export class GetTasks implements Action {
   readonly type = TasksActionTypes.GET_TASKS;
+
+  constructor(public payload?: Task) { }
 }
 
 export class GetTask implements Action {
