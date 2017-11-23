@@ -15,6 +15,7 @@ import { TaskPromiseService } from './../services/task-promise.service';
 })
 export class TaskListComponent implements OnInit {
   tasks: Array<Task>;
+  tasksState$: Store<any>;
 
   constructor(
     private router: Router,
@@ -25,10 +26,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-
-    this.taskPromiseService.getTasks()
-      .then(tasks => this.tasks = tasks)
-      .catch((err) => console.log(err));
+    this.tasksState$ = this.store.select('tasks');
   }
 
   createTask() {
