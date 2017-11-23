@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+// @Ngrx
+import { StoreModule } from '@ngrx/store';
+
 import { TasksModule } from './tasks/tasks.module';
 
 // add this line if you don't have access to
@@ -32,7 +35,8 @@ import { MyInterceptor } from './services/interceptors.service';
     FormsModule,
     HttpClientModule,
     TasksModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({})
   ],
   providers: [
     AuthGuard,
