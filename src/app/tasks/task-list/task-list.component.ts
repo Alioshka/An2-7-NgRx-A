@@ -36,8 +36,6 @@ export class TaskListComponent implements OnInit {
   }
 
   completeTask(task: Task): void {
-    // task.done = true;
-    // this.taskPromiseService.updateTask(task);
     this.store.dispatch({
       type: TasksActionTypes.DONE_TASK,
       payload: task
