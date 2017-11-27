@@ -4,7 +4,9 @@ import { Task } from './../../models/task';
 
 // [Tasks]- namespace
 export const TasksActionTypes = {
-  GET_TASKS:   '[Tasks] GET_TASKS',
+  GET_TASKS: '[Tasks] GET_TASKS',
+  GET_TASKS_SUCCESS: '[Tasks] GET_TASKS_SUCCESS',
+  GET_TASKS_ERROR: '[Tasks] GET_TASKS_ERROR',
   GET_TASK:    '[Tasks] GET_TASK',
   ADD_TASK:    '[Tasks] ADD_TASK',
   EDIT_TASK:   '[Tasks] EDIT_TASK',
@@ -14,6 +16,18 @@ export const TasksActionTypes = {
 
 export class GetTasks implements Action {
   readonly type = TasksActionTypes.GET_TASKS;
+
+  constructor(public payload?: Task) { }
+}
+
+export class GetTasksSuccess implements Action {
+  readonly type = TasksActionTypes.GET_TASKS_SUCCESS;
+
+  constructor(public payload: Task[]) { }
+}
+
+export class GetTasksError implements Action {
+  readonly type = TasksActionTypes.GET_TASKS_ERROR;
 
   constructor(public payload?: Task) { }
 }
@@ -50,6 +64,8 @@ export class DoneTask implements Action {
 
 export type TasksActions =
   GetTasks |
+  GetTasksSuccess |
+  GetTasksError |
   GetTask |
   AddTask |
   EditTask |

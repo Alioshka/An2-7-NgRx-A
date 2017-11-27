@@ -1,5 +1,6 @@
 import { TasksActionTypes, TasksActions } from './../actions/tasks.actions';
 import { State, intitialState } from '../state/main-state';
+import { Task } from './../../models/task';
 
 export function tasksReducer( state = intitialState, action: TasksActions ): State {
   console.log(`Action came in! ${action.type}`);
@@ -7,7 +8,20 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
   switch (action.type) {
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
-      return Object.assign({}, state);
+      return Object.assign({}, state, { tasks: { error: null } });
+    }
+
+    case TasksActionTypes.GET_TASKS_SUCCESS: {
+      console.log('GET_TASKS_SUCCESS action being handled!');
+
+      // Добавляем в стейт задачи
+      return Object.assign({}, state, { tasks: { data: action.payload, error: null } });
+    }
+
+    case TasksActionTypes.GET_TASKS_ERROR: {
+      console.log('GET_TASKS_ERROR action being handled!');
+      // Добавляем в стейт ошибку
+      return Object.assign({}, state, { tasks: { error: 'Error: Cannot retrive data from a store.' } });
     }
 
     case TasksActionTypes.ADD_TASK: {
@@ -32,15 +46,15 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
       // если таск совпадает с тем, который пришел в пейлоаде,
       // то изменим ему свойство done
       // остальные задачи оставляем без изменения
-      const tasks = state.tasks.map(task => {
-        if (task.id === action.payload.id) {
+      const tasks = state.tasks.data.map(task => {
+        if (task.id === (<Task>action.payload).id) {
           return Object.assign({}, action.payload, {done: true});
         } else {
           return task;
         }
       });
 
-      return Object.assign({}, state, {tasks});
+      return Object.assign({}, state, { tasks: { data: tasks, error: null } });
     }
 
     default: {
