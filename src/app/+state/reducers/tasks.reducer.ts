@@ -32,7 +32,7 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
       // если таск совпадает с тем, который пришел в пейлоаде,
       // то изменим ему свойство done
       // остальные задачи оставляем без изменения
-      const tasks = state.tasks.map(task => {
+      const tasks = state.tasks.data.map(task => {
         if (task.id === action.payload.id) {
           return Object.assign({}, action.payload, {done: true});
         } else {
@@ -40,7 +40,7 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
         }
       });
 
-      return Object.assign({}, state, {tasks});
+      return Object.assign({}, state, { tasks: {data: tasks}});
     }
 
     default: {
