@@ -13,9 +13,7 @@ export class TasksEffects {
     .ofType(TasksActionTypes.GET_TASKS)
     .switchMap(action =>
       this.taskPromiseService.getTasks()
-        // .then(tasks => ({ type: TasksActionTypes.GET_TASKS_SUCCESS, payload: tasks }))
         .then(tasks => new GetTasksSuccess(tasks) )
-        // .catch(() => ({ type: TasksActionTypes.GET_TASKS_ERROR }))
         .catch(() => new GetTasksError())
     );
 

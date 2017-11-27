@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { State } from './../../+state/state/main-state';
-import { TasksActionTypes, GetTasks } from './../../+state/actions/tasks.actions';
+import { DoneTask, GetTasks } from './../../+state/actions/tasks.actions';
 
 import { Task } from './../../models/task';
 import { TaskArrayService } from './../services/task-array.service';
@@ -38,10 +38,7 @@ export class TaskListComponent implements OnInit {
   }
 
   completeTask(task: Task): void {
-    this.store.dispatch({
-      type: TasksActionTypes.DONE_TASK,
-      payload: task
-    });
+    this.store.dispatch(new DoneTask(task));
   }
 
   deleteTask(task: Task) {
