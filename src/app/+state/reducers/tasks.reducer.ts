@@ -6,22 +6,96 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
   console.log(`Action came in! ${action.type}`);
 
   switch (action.type) {
+    /**
+     * GET_TASKS, GET_TASKS_SUCCESS, GET_TASKS_ERROR
+     */
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
-      return Object.assign({}, state, { tasks: { error: null } });
+
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: [],
+          selected: -1,
+          error: null
+        }
+      });
+      return newState;
     }
 
     case TasksActionTypes.GET_TASKS_SUCCESS: {
       console.log('GET_TASKS_SUCCESS action being handled!');
 
-      // Добавляем в стейт задачи
-      return Object.assign({}, state, { tasks: { data: action.payload, error: null } });
+      const tasks = [...<Array<Task>>action.payload];
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          selected: -1,
+          error: null
+        }
+      });
+      return newState;
     }
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
-      // Добавляем в стейт ошибку
-      return Object.assign({}, state, { tasks: { error: 'Error: Cannot retrive data from a store.' } });
+
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: [],
+          selected: -1,
+          error: 'Error: Cannot retrive data from a store.'
+        }
+      });
+      return newState;
+    }
+
+    /**
+     * GET_TASK, GET_TASK_SUCCESS, GET_TASK_ERROR
+     */
+    case TasksActionTypes.GET_TASK: {
+      console.log('GET_TASK action being handled!');
+
+      const tasks = [...state.tasks.data];
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          selected: -1,
+          error: null
+        }
+      });
+      return newState;
+    }
+
+    case TasksActionTypes.GET_TASK_SUCCESS: {
+      console.log('GET_TASK_SUCCESS action being handled!');
+
+      const task = { ...<Task>action.payload };
+      const tasks = [...state.tasks.data];
+      const index = tasks.findIndex(t => t.id === task.id);
+
+      tasks[index] = task;
+
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          selected: index,
+          error: null
+        }
+      });
+      return newState;
+    }
+
+    case TasksActionTypes.GET_TASK_ERROR: {
+      console.log('GET_TASK_ERROR action being handled!');
+
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: [],
+          selected: -1,
+          error: 'Error: Cannot retrive task from a store.'
+        }
+      });
+      return newState;
     }
 
     case TasksActionTypes.ADD_TASK: {
@@ -54,7 +128,14 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
         }
       });
 
-      return Object.assign({}, state, { tasks: { data: tasks, error: null } });
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          seleced: -1,
+          error: null
+        }
+      });
+      return newState;
     }
 
     default: {

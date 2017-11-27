@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 // @Ngrx
 import { Actions, Effect } from '@ngrx/effects';
-import { TasksActionTypes, GetTasksSuccess, GetTasksError } from './../actions/tasks.actions';
+import { TasksActionTypes, GetTasksSuccess, GetTasksError, GetTask, GetTaskSuccess, GetTaskError } from './../actions/tasks.actions';
 
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
 
@@ -17,9 +18,18 @@ export class TasksEffects {
         .catch(() => new GetTasksError())
     );
 
+  @Effect() getTask$ = this.actions$
+    .ofType(TasksActionTypes.GET_TASK)
+    .switchMap(action =>
+      this.taskPromiseService.getTask(action['payload'])
+        .then(task => new GetTaskSuccess(task) )
+        .catch(() => new GetTaskError())
+    );
+
   constructor(
     private actions$: Actions,
     private taskPromiseService: TaskPromiseService,
+    private router: Router
   ) {
     console.log('[TASKS EFFECTS]');
   }

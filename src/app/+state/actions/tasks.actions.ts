@@ -8,6 +8,8 @@ export const TasksActionTypes = {
   GET_TASKS_SUCCESS: '[Tasks] GET_TASKS_SUCCESS',
   GET_TASKS_ERROR: '[Tasks] GET_TASKS_ERROR',
   GET_TASK:    '[Tasks] GET_TASK',
+  GET_TASK_SUCCESS:    '[Tasks] GET_TASK_SUCCESS',
+  GET_TASK_ERROR:    '[Tasks] GET_TASK_ERROR',
   ADD_TASK:    '[Tasks] ADD_TASK',
   EDIT_TASK:   '[Tasks] EDIT_TASK',
   DELETE_TASK: '[Tasks] DELETE_TASK',
@@ -35,7 +37,19 @@ export class GetTasksError implements Action {
 export class GetTask implements Action {
   readonly type = TasksActionTypes.GET_TASK;
 
+  constructor(public payload: string | number) { }
+}
+
+export class GetTaskSuccess implements Action {
+  readonly type = TasksActionTypes.GET_TASK_SUCCESS;
+
   constructor(public payload: Task) { }
+}
+
+export class GetTaskError implements Action {
+  readonly type = TasksActionTypes.GET_TASK_ERROR;
+
+  constructor(public payload?: Task) { }
 }
 
 export class AddTask implements Action {
@@ -67,6 +81,8 @@ export type TasksActions =
   GetTasksSuccess |
   GetTasksError |
   GetTask |
+  GetTaskSuccess |
+  GetTaskError |
   AddTask |
   EditTask |
   DeleteTask |
