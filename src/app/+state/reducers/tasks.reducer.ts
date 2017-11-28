@@ -20,9 +20,10 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.GET_TASKS_SUCCESS: {
       console.log('GET_TASKS_SUCCESS action being handled!');
+      const tasks = [...<Array<Task>>action.payload];
       const newState = Object.assign({}, state, {
         tasks: {
-          data: [...<Array<Task>>action.payload],
+          data: tasks,
           error: null
         }
       });
