@@ -23,7 +23,7 @@ export class TasksEffects {
     .switchMap(action =>
       this.taskPromiseService.getTask(action['payload'])
         .then(task => new GetTaskSuccess(task) )
-        .catch(() => new GetTaskError())
+        .catch(err => new GetTaskError(err))
     );
 
   constructor(
