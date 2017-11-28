@@ -1,5 +1,6 @@
 import { TasksActionTypes, TasksActions } from './../actions/tasks.actions';
 import { State, intitialState } from '../state/main-state';
+
 import { Task } from './../../models/task';
 
 export function tasksReducer( state = intitialState, action: TasksActions ): State {
@@ -11,7 +12,6 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
      */
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
-
       const newState = Object.assign({}, state, {
         tasks: {
           data: [],
@@ -38,12 +38,11 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
-
       const newState = Object.assign({}, state, {
         tasks: {
           data: [],
           selected: -1,
-          error: 'Error: Cannot retrive data from a store.'
+          error: action.payload
         }
       });
       return newState;
@@ -92,7 +91,7 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
         tasks: {
           data: [],
           selected: -1,
-          error: 'Error: Cannot retrive task from a store.'
+          error: action.payload
         }
       });
       return newState;

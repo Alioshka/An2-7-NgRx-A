@@ -31,7 +31,7 @@ export class GetTasksSuccess implements Action {
 export class GetTasksError implements Action {
   readonly type = TasksActionTypes.GET_TASKS_ERROR;
 
-  constructor(public payload?: Task) { }
+  constructor(public payload: string) { }
 }
 
 export class GetTask implements Action {
@@ -49,7 +49,7 @@ export class GetTaskSuccess implements Action {
 export class GetTaskError implements Action {
   readonly type = TasksActionTypes.GET_TASK_ERROR;
 
-  constructor(public payload?: Task) { }
+  constructor(public payload: string) { }
 }
 
 export class AddTask implements Action {

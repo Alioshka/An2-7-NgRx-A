@@ -15,7 +15,7 @@ export class TasksEffects {
     .switchMap(action =>
       this.taskPromiseService.getTasks()
         .then(tasks => new GetTasksSuccess(tasks) )
-        .catch(() => new GetTasksError())
+        .catch(err => new GetTasksError(err))
     );
 
   @Effect() getTask$ = this.actions$
