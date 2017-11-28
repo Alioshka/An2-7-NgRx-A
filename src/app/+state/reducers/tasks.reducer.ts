@@ -1,6 +1,8 @@
 import { TasksActionTypes, TasksActions } from './../actions/tasks.actions';
 import { State, intitialState } from '../state/main-state';
 
+import { Task } from '../../models/task';
+
 export function tasksReducer( state = intitialState, action: TasksActions ): State {
   console.log(`Action came in! ${action.type}`);
 
@@ -33,14 +35,18 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
       // то изменим ему свойство done
       // остальные задачи оставляем без изменения
       const tasks = state.tasks.data.map(task => {
-        if (task.id === action.payload.id) {
+        if (task.id === (<Task>action.payload).id) {
           return Object.assign({}, action.payload, {done: true});
         } else {
           return task;
         }
       });
-
-      return Object.assign({}, state, { tasks: {data: tasks}});
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks
+        }
+      });
+      return newState;
     }
 
     default: {
