@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { Actions, Effect } from '@ngrx/effects';
-import { TasksActionTypes, GetTasksSuccess, GetTasksError, GetTask, GetTaskSuccess, GetTaskError } from './../actions/tasks.actions';
+import {
+  TasksActionTypes, GetTasksSuccess, GetTasksError,
+  GetTask, GetTaskSuccess, GetTaskError,
+  UpdateTask, UpdateTaskSuccess, UpdateTaskError
+} from './../actions/tasks.actions';
 
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
 
@@ -16,7 +20,7 @@ export class TasksEffects {
       this.taskPromiseService.getTasks()
         .then(tasks => new GetTasksSuccess(tasks) )
         .catch(err => new GetTasksError(err))
-    );
+  );
 
   @Effect() getTask$ = this.actions$
     .ofType(TasksActionTypes.GET_TASK)
@@ -24,7 +28,18 @@ export class TasksEffects {
       this.taskPromiseService.getTask(action['payload'])
         .then(task => new GetTaskSuccess(task) )
         .catch(err => new GetTaskError(err))
-    );
+  );
+
+  @Effect() updateTask$ = this.actions$
+  .ofType(TasksActionTypes.UPDATE_TASK)
+  .switchMap(action =>
+    this.taskPromiseService.updateTask(action['payload'])
+      .then(task => {
+        this.router.navigate(['/home']);
+        return new UpdateTaskSuccess(task);
+      })
+      .catch(err => new UpdateTaskError(err))
+  );
 
   constructor(
     private actions$: Actions,

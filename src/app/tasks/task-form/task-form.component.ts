@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { State } from './../../+state/state/main-state';
-import { GetTask } from './../../+state/actions/tasks.actions';
+import { AddTask, GetTask, UpdateTask } from './../../+state/actions/tasks.actions';
 
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
@@ -53,9 +53,15 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       this.task.estHours
     );
 
-    const method = task.id ? 'updateTask' : 'createTask';
-    this.taskPromiseService[method](task)
-      .then(() => this.goBack());
+    // const method = task.id ? 'updateTask' : 'createTask';
+    // this.taskPromiseService[method](task)
+    //   .then(() => this.goBack());
+    if (task.id) {
+      this.store.dispatch(new UpdateTask(task));
+    } else {
+      this.store.dispatch(new AddTask(task));
+    }
+
   }
 
   goBack(): void {
