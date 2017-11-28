@@ -9,7 +9,7 @@ export const TasksActionTypes = {
   GET_TASKS_ERROR: '[Tasks] GET_TASKS_ERROR',
   GET_TASK:    '[Tasks] GET_TASK',
   ADD_TASK:    '[Tasks] ADD_TASK',
-  EDIT_TASK:   '[Tasks] EDIT_TASK',
+  UPDATE_TASK: '[Tasks] UPDATE_TASK',
   DELETE_TASK: '[Tasks] DELETE_TASK',
   DONE_TASK:   '[Tasks] DONE_TASK'
 };
@@ -44,8 +44,8 @@ export class AddTask implements Action {
   constructor(public payload: Task) { }
 }
 
-export class EditTask implements Action {
-  readonly type = TasksActionTypes.EDIT_TASK;
+export class UpdateTask implements Action {
+  readonly type = TasksActionTypes.UPDATE_TASK;
 
   constructor(public payload: Task) { }
 }
@@ -68,6 +68,6 @@ export type TasksActions =
   GetTasksError |
   GetTask |
   AddTask |
-  EditTask |
+  UpdateTask |
   DeleteTask |
   DoneTask;
