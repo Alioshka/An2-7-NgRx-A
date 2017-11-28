@@ -4,7 +4,7 @@ import { State, intitialState } from '../state/main-state';
 import { Task } from '../../models/task';
 
 export function tasksReducer( state = intitialState, action: TasksActions ): State {
-  console.log(`Action came in! ${action.type}`);
+  console.log(`Reducer: Action came in! ${action.type}`);
 
   switch (action.type) {
     case TasksActionTypes.GET_TASKS: {
@@ -17,8 +17,8 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
       return Object.assign({}, state);
     }
 
-    case TasksActionTypes.EDIT_TASK: {
-      console.log('EDIT_TASK action being handled!');
+    case TasksActionTypes.UPDATE_TASK: {
+      console.log('UPDATE_TASK action being handled!');
       return Object.assign({}, state);
     }
 
