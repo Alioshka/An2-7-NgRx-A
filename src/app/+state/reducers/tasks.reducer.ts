@@ -4,7 +4,7 @@ import { State, intitialState } from '../state/main-state';
 import { Task } from './../../models/task';
 
 export function tasksReducer( state = intitialState, action: TasksActions ): State {
-  console.log(`Action came in! ${action.type}`);
+  console.log(`Reducer: Action came in! ${action.type}`);
 
   switch (action.type) {
     /**
@@ -12,9 +12,10 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
      */
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
+      const tasks = [...state.tasks.data];
       const newState = Object.assign({}, state, {
         tasks: {
-          data: [],
+          data: tasks,
           selected: -1,
           error: null
         }
@@ -24,7 +25,6 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.GET_TASKS_SUCCESS: {
       console.log('GET_TASKS_SUCCESS action being handled!');
-
       const tasks = [...<Array<Task>>action.payload];
       const newState = Object.assign({}, state, {
         tasks: {
@@ -38,9 +38,10 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
+      const tasks = [...state.tasks.data];
       const newState = Object.assign({}, state, {
         tasks: {
-          data: [],
+          data: tasks,
           selected: -1,
           error: action.payload
         }
@@ -86,10 +87,10 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.GET_TASK_ERROR: {
       console.log('GET_TASK_ERROR action being handled!');
-
+      const tasks = [...state.tasks.data];
       const newState = Object.assign({}, state, {
         tasks: {
-          data: [],
+          data: tasks,
           selected: -1,
           error: action.payload
         }
