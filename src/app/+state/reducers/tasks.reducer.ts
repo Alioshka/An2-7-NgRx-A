@@ -9,20 +9,35 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
   switch (action.type) {
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
-      return Object.assign({}, state, { tasks: { error: null } });
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: [],
+          error: null
+        }
+      });
+      return newState;
     }
 
     case TasksActionTypes.GET_TASKS_SUCCESS: {
       console.log('GET_TASKS_SUCCESS action being handled!');
-
-      // Добавляем в стейт задачи
-      return Object.assign({}, state, { tasks: { data: action.payload, error: null } });
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: [...<Array<Task>>action.payload],
+          error: null
+        }
+      });
+      return newState;
     }
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
-      // Добавляем в стейт ошибку
-      return Object.assign({}, state, { tasks: { error: 'Error: Cannot retrive data from a store.' } });
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: [],
+          error: action.payload
+        }
+      });
+      return newState;
     }
 
     case TasksActionTypes.ADD_TASK: {
