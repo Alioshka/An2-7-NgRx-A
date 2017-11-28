@@ -53,15 +53,11 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       this.task.estHours
     );
 
-    // const method = task.id ? 'updateTask' : 'createTask';
-    // this.taskPromiseService[method](task)
-    //   .then(() => this.goBack());
     if (task.id) {
       this.store.dispatch(new UpdateTask(task));
     } else {
       this.store.dispatch(new CreateTask(task));
     }
-
   }
 
   goBack(): void {
