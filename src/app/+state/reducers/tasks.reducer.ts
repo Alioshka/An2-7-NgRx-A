@@ -98,8 +98,8 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
       return newState;
     }
 
-    case TasksActionTypes.ADD_TASK: {
-      console.log('ADD_TASK action being handled!');
+    case TasksActionTypes.CREATE_TASK: {
+      console.log('CREATE_TASK action being handled!');
       return Object.assign({}, state);
     }
 
