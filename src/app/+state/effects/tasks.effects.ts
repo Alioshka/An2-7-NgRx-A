@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { Actions, Effect } from '@ngrx/effects';
-import { TasksActionTypes, GetTasksSuccess, GetTasksError, GetTask, GetTaskSuccess, GetTaskError } from './../actions/tasks.actions';
+import {
+  TasksActionTypes,
+  GetTasksSuccess, GetTasksError,
+  GetTaskSuccess, GetTaskError
+} from './../actions/tasks.actions';
 
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
 

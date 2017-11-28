@@ -7,10 +7,8 @@ import { State } from './../../+state/state/main-state';
 import { GetTask } from './../../+state/actions/tasks.actions';
 
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/switchMap';
 
 import { Task } from './../../models/task';
-import { TaskArrayService } from './../services/task-array.service';
 import { TaskPromiseService } from './../services/task-promise.service';
 
 @Component({
@@ -24,7 +22,6 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(
-    private taskArrayService: TaskArrayService,
     private taskPromiseService: TaskPromiseService,
     private router: Router,
     private route: ActivatedRoute,
@@ -38,7 +35,13 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.sub = this.tasksState$.subscribe(tasksState =>
       this.task = Object.assign({}, tasksState.tasks.data[tasksState.tasks.selected]));
 
-    this.route.paramMap.subscribe( params => this.store.dispatch(new GetTask(params.get('id'))));
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.store.dispatch(new GetTask(id));
+      }
+    });
+
   }
 
   ngOnDestroy(): void {

@@ -7,9 +7,7 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
   console.log(`Reducer: Action came in! ${action.type}`);
 
   switch (action.type) {
-    /**
-     * GET_TASKS, GET_TASKS_SUCCESS, GET_TASKS_ERROR
-     */
+
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
       const tasks = [...state.tasks.data];
@@ -38,23 +36,11 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
-      const tasks = [...state.tasks.data];
-      const newState = Object.assign({}, state, {
-        tasks: {
-          data: tasks,
-          selected: -1,
-          error: action.payload
-        }
-      });
-      return newState;
+      return createNewStateWhenError(state, action);
     }
 
-    /**
-     * GET_TASK, GET_TASK_SUCCESS, GET_TASK_ERROR
-     */
     case TasksActionTypes.GET_TASK: {
       console.log('GET_TASK action being handled!');
-
       const tasks = [...state.tasks.data];
       const newState = Object.assign({}, state, {
         tasks: {
@@ -87,15 +73,7 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.GET_TASK_ERROR: {
       console.log('GET_TASK_ERROR action being handled!');
-      const tasks = [...state.tasks.data];
-      const newState = Object.assign({}, state, {
-        tasks: {
-          data: tasks,
-          selected: -1,
-          error: action.payload
-        }
-      });
-      return newState;
+      return createNewStateWhenError(state, action);
     }
 
     case TasksActionTypes.CREATE_TASK: {
@@ -143,4 +121,17 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
       return state;
     }
   }
+}
+
+// Helper-Functions
+function createNewStateWhenError(state: State, action: TasksActions): State {
+  const tasks = [...state.tasks.data];
+  const newState = Object.assign({}, state, {
+    tasks: {
+      data: tasks,
+      selected: -1,
+      error: action.payload
+    }
+  });
+  return newState;
 }
