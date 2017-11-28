@@ -4,9 +4,11 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { Actions, Effect } from '@ngrx/effects';
 import {
-  TasksActionTypes, GetTasksSuccess, GetTasksError,
-  GetTask, GetTaskSuccess, GetTaskError,
-  UpdateTask, UpdateTaskSuccess, UpdateTaskError
+  TasksActionTypes,
+  GetTasksSuccess, GetTasksError,
+  GetTaskSuccess, GetTaskError,
+  UpdateTaskSuccess, UpdateTaskError,
+  CreateTaskSuccess, CreateTaskError
 } from './../actions/tasks.actions';
 
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
@@ -31,14 +33,25 @@ export class TasksEffects {
   );
 
   @Effect() updateTask$ = this.actions$
-  .ofType(TasksActionTypes.UPDATE_TASK)
-  .switchMap(action =>
-    this.taskPromiseService.updateTask(action['payload'])
-      .then(task => {
-        this.router.navigate(['/home']);
-        return new UpdateTaskSuccess(task);
-      })
-      .catch(err => new UpdateTaskError(err))
+    .ofType(TasksActionTypes.UPDATE_TASK)
+    .switchMap(action =>
+      this.taskPromiseService.updateTask(action['payload'])
+        .then(task => {
+          this.router.navigate(['/home']);
+          return new UpdateTaskSuccess(task);
+        })
+        .catch(err => new UpdateTaskError(err))
+  );
+
+  @Effect() createTask$ = this.actions$
+    .ofType(TasksActionTypes.CREATE_TASK)
+    .switchMap(action =>
+      this.taskPromiseService.createTask(action['payload'])
+        .then(task => {
+          this.router.navigate(['/home']);
+          return new CreateTaskSuccess(task);
+        })
+        .catch(err => new CreateTaskError(err))
   );
 
   constructor(

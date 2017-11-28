@@ -10,7 +10,9 @@ export const TasksActionTypes = {
   GET_TASK:    '[Tasks] GET_TASK',
   GET_TASK_SUCCESS:    '[Tasks] GET_TASK_SUCCESS',
   GET_TASK_ERROR:    '[Tasks] GET_TASK_ERROR',
-  ADD_TASK:    '[Tasks] ADD_TASK',
+  CREATE_TASK:    '[Tasks] CREATE_TASK',
+  CREATE_TASK_SUCCESS:    '[Tasks] CREATE_TASK_SUCCESS',
+  CREATE_TASK_ERROR:    '[Tasks] CREATE_TASK_ERROR',
   UPDATE_TASK:   '[Tasks] UPDATE_TASK',
   UPDATE_TASK_SUCCESS:   '[Tasks] UPDATE_TASK_SUCCESS',
   UPDATE_TASK_ERROR:   '[Tasks] UPDATE_TASK_ERROR',
@@ -54,10 +56,22 @@ export class GetTaskError implements Action {
   constructor(public payload: string) { }
 }
 
-export class AddTask implements Action {
-  readonly type = TasksActionTypes.ADD_TASK;
+export class CreateTask implements Action {
+  readonly type = TasksActionTypes.CREATE_TASK;
 
   constructor(public payload: Task) { }
+}
+
+export class CreateTaskSuccess implements Action {
+  readonly type = TasksActionTypes.CREATE_TASK_SUCCESS;
+
+  constructor(public payload: Task) { }
+}
+
+export class CreateTaskError implements Action {
+  readonly type = TasksActionTypes.CREATE_TASK_ERROR;
+
+  constructor(public payload: string) { }
 }
 
 export class UpdateTask implements Action {
@@ -97,7 +111,9 @@ export type TasksActions =
   GetTask |
   GetTaskSuccess |
   GetTaskError |
-  AddTask |
+  CreateTask |
+  CreateTaskSuccess |
+  CreateTaskError |
   UpdateTask |
   UpdateTaskSuccess |
   UpdateTaskError |

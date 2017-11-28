@@ -4,14 +4,11 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { State } from './../../+state/state/main-state';
-import { AddTask, GetTask, UpdateTask } from './../../+state/actions/tasks.actions';
+import { CreateTask, GetTask, UpdateTask } from './../../+state/actions/tasks.actions';
 
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/switchMap';
 
 import { Task } from './../../models/task';
-import { TaskArrayService } from './../services/task-array.service';
-import { TaskPromiseService } from './../services/task-promise.service';
 
 @Component({
   templateUrl: './task-form.component.html',
@@ -24,8 +21,6 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(
-    private taskArrayService: TaskArrayService,
-    private taskPromiseService: TaskPromiseService,
     private router: Router,
     private route: ActivatedRoute,
     private store: Store<State>
@@ -38,7 +33,12 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.sub = this.tasksState$.subscribe(tasksState =>
       this.task = Object.assign({}, tasksState.tasks.data[tasksState.tasks.selected]));
 
-    this.route.paramMap.subscribe( params => this.store.dispatch(new GetTask(params.get('id'))));
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.store.dispatch(new GetTask(id));
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -59,7 +59,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     if (task.id) {
       this.store.dispatch(new UpdateTask(task));
     } else {
-      this.store.dispatch(new AddTask(task));
+      this.store.dispatch(new CreateTask(task));
     }
 
   }

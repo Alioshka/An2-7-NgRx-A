@@ -98,9 +98,47 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
       return newState;
     }
 
-    case TasksActionTypes.ADD_TASK: {
-      console.log('ADD_TASK action being handled!');
-      return Object.assign({}, state);
+    case TasksActionTypes.CREATE_TASK: {
+      console.log('CREATE_TASK action being handled!');
+      const tasks = [...state.tasks.data];
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          selected: -1,
+          error: null
+        }
+      });
+      return newState;
+    }
+
+    case TasksActionTypes.CREATE_TASK_SUCCESS: {
+      console.log('CREATE_TASK_SUCCESS action being handled!');
+      const task = { ...<Task>action.payload };
+      const tasks = [...state.tasks.data];
+
+      tasks.push(task);
+
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          selected: -1,
+          error: null
+        }
+      });
+      return newState;
+    }
+
+    case TasksActionTypes.CREATE_TASK_ERROR: {
+      console.log('CREATE_TASK_ERROR action being handled!');
+      const tasks = [...state.tasks.data];
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          selected: -1,
+          error: action.payload
+        }
+      });
+      return newState;
     }
 
     case TasksActionTypes.UPDATE_TASK: {
