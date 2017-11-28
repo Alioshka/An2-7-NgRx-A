@@ -1,5 +1,6 @@
 import { TasksActionTypes, TasksActions } from './../actions/tasks.actions';
 import { State, intitialState } from '../state/main-state';
+
 import { Task } from './../../models/task';
 
 export function tasksReducer( state = intitialState, action: TasksActions ): State {
@@ -53,8 +54,13 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
           return task;
         }
       });
-
-      return Object.assign({}, state, { tasks: { data: tasks, error: null } });
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          error: null
+        }
+      });
+      return newState;
     }
 
     default: {
