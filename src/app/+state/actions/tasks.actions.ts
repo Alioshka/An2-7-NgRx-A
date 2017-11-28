@@ -6,7 +6,7 @@ import { Task } from './../../models/task';
 export const TasksActionTypes = {
   GET_TASKS:   '[Tasks] GET_TASKS',
   GET_TASK:    '[Tasks] GET_TASK',
-  ADD_TASK:    '[Tasks] ADD_TASK',
+  CREATE_TASK: '[Tasks] CREATE_TASK',
   UPDATE_TASK: '[Tasks] UPDATE_TASK',
   DELETE_TASK: '[Tasks] DELETE_TASK',
   DONE_TASK:   '[Tasks] DONE_TASK'
@@ -24,8 +24,8 @@ export class GetTask implements Action {
   constructor(public payload: string | number) { }
 }
 
-export class AddTask implements Action {
-  readonly type = TasksActionTypes.ADD_TASK;
+export class CreateTask implements Action {
+  readonly type = TasksActionTypes.CREATE_TASK;
 
   constructor(public payload: Task) { }
 }
@@ -51,7 +51,7 @@ export class DoneTask implements Action {
 export type TasksActions =
   GetTasks |
   GetTask |
-  AddTask |
+  CreateTask |
   UpdateTask |
   DeleteTask |
   DoneTask;
