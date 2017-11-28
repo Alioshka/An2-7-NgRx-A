@@ -21,7 +21,7 @@ export class GetTasks implements Action {
 export class GetTask implements Action {
   readonly type = TasksActionTypes.GET_TASK;
 
-  constructor(public payload: Task) { }
+  constructor(public payload: string | number) { }
 }
 
 export class AddTask implements Action {
