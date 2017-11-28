@@ -9,9 +9,10 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
   switch (action.type) {
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
+      const tasks = [...state.tasks.data];
       const newState = Object.assign({}, state, {
         tasks: {
-          data: [],
+          data: tasks,
           error: null
         }
       });
@@ -32,9 +33,10 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
+      const tasks = [...state.tasks.data];
       const newState = Object.assign({}, state, {
         tasks: {
-          data: [],
+          data: tasks,
           error: action.payload
         }
       });
