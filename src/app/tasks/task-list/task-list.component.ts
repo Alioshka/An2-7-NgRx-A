@@ -4,11 +4,9 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { State } from './../../+state/state/main-state';
-import { DeleteTask, DoneTask, GetTasks } from './../../+state/actions/tasks.actions';
+import { DeleteTask, UpdateTask, GetTasks } from './../../+state/actions/tasks.actions';
 
 import { Task } from './../../models/task';
-// import { TaskArrayService } from './../services/task-array.service';
-// import { TaskPromiseService } from './../services/task-promise.service';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -20,8 +18,6 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    // private taskArrayService: TaskArrayService,
-    // private taskPromiseService: TaskPromiseService,
     private store: Store<State>
   ) { }
 
@@ -38,14 +34,13 @@ export class TaskListComponent implements OnInit {
   }
 
   completeTask(task: Task): void {
-    this.store.dispatch(new DoneTask(task));
+    const t = {...task};
+    t.done = true;
+    this.store.dispatch(new UpdateTask(t));
   }
 
   deleteTask(task: Task) {
     this.store.dispatch(new DeleteTask(task));
-    // this.taskPromiseService.deleteTask(task)
-    //   .then(() => this.tasks = this.tasks.filter(t => t !== task))
-    //   .catch(err => console.log(err));
   }
 
 }

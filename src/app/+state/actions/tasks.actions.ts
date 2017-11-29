@@ -18,8 +18,7 @@ export const TasksActionTypes = {
   UPDATE_TASK_ERROR:   '[Tasks] UPDATE_TASK_ERROR',
   DELETE_TASK: '[Tasks] DELETE_TASK',
   DELETE_TASK_SUCCESS: '[Tasks] DELETE_TASK_SUCCESS',
-  DELETE_TASK_ERROR: '[Tasks] DELETE_TASK_ERROR',
-  DONE_TASK:   '[Tasks] DONE_TASK'
+  DELETE_TASK_ERROR: '[Tasks] DELETE_TASK_ERROR'
 };
 
 export class GetTasks implements Action {
@@ -112,12 +111,6 @@ export class DeleteTaskError implements Action {
   constructor(public payload: string) { }
 }
 
-export class DoneTask implements Action {
-  readonly type = TasksActionTypes.DONE_TASK;
-
-  constructor(public payload: Task) { }
-}
-
 export type TasksActions =
   GetTasks |
   GetTasksSuccess |
@@ -133,5 +126,4 @@ export type TasksActions =
   UpdateTaskError |
   DeleteTask |
   DeleteTaskSuccess |
-  DeleteTaskError |
-  DoneTask;
+  DeleteTaskError;
