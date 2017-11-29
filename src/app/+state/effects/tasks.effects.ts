@@ -8,7 +8,8 @@ import {
   GetTasksSuccess, GetTasksError,
   GetTaskSuccess, GetTaskError,
   UpdateTaskSuccess, UpdateTaskError,
-  CreateTaskSuccess, CreateTaskError
+  CreateTaskSuccess, CreateTaskError,
+  DeleteTaskSuccess, DeleteTaskError
 } from './../actions/tasks.actions';
 
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
@@ -52,6 +53,16 @@ export class TasksEffects {
           return new CreateTaskSuccess(task);
         })
         .catch(err => new CreateTaskError(err))
+  );
+
+  @Effect() deleteTask$ = this.actions$
+    .ofType(TasksActionTypes.DELETE_TASK)
+    .switchMap(action =>
+      this.taskPromiseService.deleteTask(action['payload'])
+        .then(task => {
+          return new DeleteTaskSuccess(task);
+        })
+        .catch(err => new DeleteTaskError(err))
   );
 
   constructor(

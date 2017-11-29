@@ -149,7 +149,38 @@ export function tasksReducer( state = intitialState, action: TasksActions ): Sta
 
     case TasksActionTypes.DELETE_TASK: {
       console.log('DELETE_TASK action being handled!');
-      return Object.assign({}, state);
+      const tasks = [...state.tasks.data];
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          selected: -1,
+          error: null
+        }
+      });
+      return newState;
+    }
+
+    case TasksActionTypes.DELETE_TASK_SUCCESS: {
+      console.log('DELETE_TASK_SUCCESS action being handled!');
+      const task = { ...<Task>action.payload };
+      const tasks = [...state.tasks.data];
+      const index = tasks.findIndex(t => t.id === task.id);
+
+      tasks.splice(index, 1);
+
+      const newState = Object.assign({}, state, {
+        tasks: {
+          data: tasks,
+          selected: index,
+          error: null
+        }
+      });
+      return newState;
+    }
+
+    case TasksActionTypes.DELETE_TASK_ERROR: {
+      console.log('DELETE_TASK_ERROR action being handled!');
+      return createNewStateWhenError(state, action);
     }
 
     case TasksActionTypes.DONE_TASK: {
