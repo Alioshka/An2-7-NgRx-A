@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 // @Ngrx
+import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import {
   TasksActionTypes,
@@ -9,12 +10,14 @@ import {
   GetTaskSuccess, GetTaskError
 } from './../actions/tasks.actions';
 
+import {Observable} from 'rxjs/Observable';
+
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
 
 @Injectable()
 export class TasksEffects {
 
-  @Effect() getTasks$ = this.actions$
+  @Effect() getTasks$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.GET_TASKS)
     .switchMap(action =>
       this.taskPromiseService.getTasks()
