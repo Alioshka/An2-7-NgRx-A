@@ -3,7 +3,7 @@ import { State, intitialState } from '../state/main-state';
 
 import { Task } from '../../models/task';
 
-export function tasksReducer( state = intitialState, action: TasksActions ): State {
+export function reducer( state = intitialState, action: TasksActions ): State {
   console.log(`Reducer: Action came in! ${action.type}`);
 
   switch (action.type) {
