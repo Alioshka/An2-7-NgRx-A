@@ -2,7 +2,8 @@ import { Action } from '@ngrx/store';
 
 import { Task } from './../../models/task';
 
-// [Tasks]- namespace
+// Actions
+// [Tasks] - namespace
 export const TasksActionTypes = {
   GET_TASKS: '[Tasks] GET_TASKS',
   GET_TASKS_SUCCESS: '[Tasks] GET_TASKS_SUCCESS',
@@ -20,6 +21,7 @@ export const TasksActionTypes = {
   DONE_TASK:   '[Tasks] DONE_TASK'
 };
 
+// Action Creators
 export class GetTasks implements Action {
   readonly type = TasksActionTypes.GET_TASKS;
 
@@ -35,7 +37,7 @@ export class GetTasksSuccess implements Action {
 export class GetTasksError implements Action {
   readonly type = TasksActionTypes.GET_TASKS_ERROR;
 
-  constructor(public payload: string) { }
+  constructor(public payload: Error) { }
 }
 
 export class GetTask implements Action {
@@ -53,7 +55,7 @@ export class GetTaskSuccess implements Action {
 export class GetTaskError implements Action {
   readonly type = TasksActionTypes.GET_TASK_ERROR;
 
-  constructor(public payload: string) { }
+  constructor(public payload: Error) { }
 }
 
 export class CreateTask implements Action {
@@ -71,7 +73,7 @@ export class CreateTaskSuccess implements Action {
 export class CreateTaskError implements Action {
   readonly type = TasksActionTypes.CREATE_TASK_ERROR;
 
-  constructor(public payload: string) { }
+  constructor(public payload: Error) { }
 }
 
 export class UpdateTask implements Action {
@@ -89,7 +91,7 @@ export class UpdateTaskSuccess implements Action {
 export class UpdateTaskError implements Action {
   readonly type = TasksActionTypes.UPDATE_TASK_ERROR;
 
-  constructor(public payload: string) { }
+  constructor(public payload: Error) { }
 }
 
 export class DeleteTask implements Action {

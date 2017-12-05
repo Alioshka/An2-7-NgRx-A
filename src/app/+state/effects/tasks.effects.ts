@@ -2,21 +2,24 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 // @Ngrx
+import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import {
   TasksActionTypes,
   GetTasksSuccess, GetTasksError,
-  GetTaskSuccess, GetTaskError,
-  UpdateTaskSuccess, UpdateTaskError,
-  CreateTaskSuccess, CreateTaskError
+  GetTask, GetTaskSuccess, GetTaskError,
+  UpdateTask, UpdateTaskSuccess, UpdateTaskError,
+  CreateTask, CreateTaskSuccess, CreateTaskError
 } from './../actions/tasks.actions';
+
+import {Observable} from 'rxjs/Observable';
 
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
 
 @Injectable()
 export class TasksEffects {
 
-  @Effect() getTasks$ = this.actions$
+  @Effect() getTasks$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.GET_TASKS)
     .switchMap(action =>
       this.taskPromiseService.getTasks()
@@ -24,29 +27,32 @@ export class TasksEffects {
         .catch(err => new GetTasksError(err))
   );
 
-  @Effect() getTask$ = this.actions$
+  @Effect() getTask$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.GET_TASK)
-    .switchMap(action =>
-      this.taskPromiseService.getTask(action['payload'])
+    .map((action: GetTask) => action.payload)
+    .switchMap(payload =>
+      this.taskPromiseService.getTask(<number>payload)
         .then(task => new GetTaskSuccess(task) )
         .catch(err => new GetTaskError(err))
   );
 
-  @Effect() updateTask$ = this.actions$
-    .ofType(TasksActionTypes.UPDATE_TASK)
-    .switchMap(action =>
-      this.taskPromiseService.updateTask(action['payload'])
-        .then(task => {
-          this.router.navigate(['/home']);
-          return new UpdateTaskSuccess(task);
-        })
-        .catch(err => new UpdateTaskError(err))
+  @Effect() updateTask$: Observable<Action> = this.actions$
+  .ofType(TasksActionTypes.UPDATE_TASK)
+  .map((action: UpdateTask) => action.payload)
+  .switchMap(payload =>
+    this.taskPromiseService.updateTask(payload)
+      .then(task => {
+        this.router.navigate(['/home']);
+        return new UpdateTaskSuccess(task);
+      })
+      .catch(err => new UpdateTaskError(err))
   );
 
-  @Effect() createTask$ = this.actions$
+  @Effect() createTask$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.CREATE_TASK)
-    .switchMap(action =>
-      this.taskPromiseService.createTask(action['payload'])
+    .map((action: CreateTask) => action.payload)
+    .switchMap(payload =>
+      this.taskPromiseService.createTask(payload)
         .then(task => {
           this.router.navigate(['/home']);
           return new CreateTaskSuccess(task);
