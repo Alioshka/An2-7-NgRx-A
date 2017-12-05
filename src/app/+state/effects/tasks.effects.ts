@@ -7,7 +7,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import {
   TasksActionTypes,
   GetTasksSuccess, GetTasksError,
-  GetTaskSuccess, GetTaskError
+  GetTask, GetTaskSuccess, GetTaskError
 } from './../actions/tasks.actions';
 
 import {Observable} from 'rxjs/Observable';
@@ -25,10 +25,11 @@ export class TasksEffects {
         .catch(err => new GetTasksError(err))
     );
 
-  @Effect() getTask$ = this.actions$
+  @Effect() getTask$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.GET_TASK)
-    .switchMap(action =>
-      this.taskPromiseService.getTask(action['payload'])
+    .map((action: GetTask) => action.payload)
+    .switchMap(payload =>
+      this.taskPromiseService.getTask(<number>payload)
         .then(task => new GetTaskSuccess(task) )
         .catch(err => new GetTaskError(err))
     );

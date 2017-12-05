@@ -33,7 +33,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
 
     this.tasksState$ = this.store.select('tasks');
     this.sub = this.tasksState$.subscribe(tasksState =>
-      this.task = Object.assign({}, tasksState.tasks.data[tasksState.tasks.selected]));
+      this.task = {...tasksState.tasks.data[tasksState.tasks.selected]});
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
