@@ -4,13 +4,13 @@ import { Task } from './../../models/task';
 
 // Actions
 // [Tasks] - namespace
-export const TasksActionTypes = {
-  GET_TASKS:   '[Tasks] GET_TASKS',
-  GET_TASK:    '[Tasks] GET_TASK',
-  CREATE_TASK: '[Tasks] CREATE_TASK',
-  UPDATE_TASK: '[Tasks] UPDATE_TASK',
-  DELETE_TASK: '[Tasks] DELETE_TASK'
-};
+export class TasksActionTypes {
+  static readonly GET_TASKS =   '[Tasks] GET_TASKS';
+  static readonly GET_TASK =    '[Tasks] GET_TASK';
+  static readonly CREATE_TASK = '[Tasks] CREATE_TASK';
+  static readonly UPDATE_TASK = '[Tasks] UPDATE_TASK';
+  static readonly DELETE_TASK = '[Tasks] DELETE_TASK';
+}
 
 // Action Creators
 export class GetTasks implements Action {
