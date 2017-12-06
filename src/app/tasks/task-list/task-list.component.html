@@ -3,7 +3,7 @@
     (click)="createTask()">New Task</button>
   <br><br>
 
-  <task *ngFor='let task of (tasksState$ | async).tasks.data'
+  <task *ngFor='let task of (tasksState$ | async).data'
     [task]="task"
     (onComplete)="completeTask($event)"
     (onDelete)="deleteTask($event)">
