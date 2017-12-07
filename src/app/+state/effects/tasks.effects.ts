@@ -4,14 +4,8 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
-import {
-  TasksActionTypes,
-  GetTasksSuccess, GetTasksError,
-  GetTask, GetTaskSuccess, GetTaskError,
-  UpdateTask, UpdateTaskSuccess, UpdateTaskError,
-  CreateTask, CreateTaskSuccess, CreateTaskError,
-  DeleteTask, DeleteTaskSuccess, DeleteTaskError
-} from './../actions/tasks.actions';
+import { TasksActionTypes } from './../actions/tasks.actions';
+import * as TasksActions from './../actions/tasks.actions';
 
 import {Observable} from 'rxjs/Observable';
 
@@ -24,52 +18,52 @@ export class TasksEffects {
     .ofType(TasksActionTypes.GET_TASKS)
     .switchMap(action =>
       this.taskPromiseService.getTasks()
-        .then(tasks => new GetTasksSuccess(tasks) )
-        .catch(err => new GetTasksError(err))
+        .then(tasks => new TasksActions.GetTasksSuccess(tasks) )
+        .catch(err => new TasksActions.GetTasksError(err))
   );
 
   @Effect() getTask$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.GET_TASK)
-    .map((action: GetTask) => action.payload)
+    .map((action: TasksActions.GetTask) => action.payload)
     .switchMap(payload =>
       this.taskPromiseService.getTask(<number>payload)
-        .then(task => new GetTaskSuccess(task) )
-        .catch(err => new GetTaskError(err))
+        .then(task => new TasksActions.GetTaskSuccess(task) )
+        .catch(err => new TasksActions.GetTaskError(err))
   );
 
   @Effect() updateTask$: Observable<Action> = this.actions$
   .ofType(TasksActionTypes.UPDATE_TASK)
-  .map((action: UpdateTask) => action.payload)
+  .map((action: TasksActions.UpdateTask) => action.payload)
   .switchMap(payload =>
     this.taskPromiseService.updateTask(payload)
       .then(task => {
         this.router.navigate(['/home']);
-        return new UpdateTaskSuccess(task);
+        return new TasksActions.UpdateTaskSuccess(task);
       })
-      .catch(err => new UpdateTaskError(err))
+      .catch(err => new TasksActions.UpdateTaskError(err))
   );
 
   @Effect() createTask$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.CREATE_TASK)
-    .map((action: CreateTask) => action.payload)
+    .map((action: TasksActions.CreateTask) => action.payload)
     .switchMap(payload =>
       this.taskPromiseService.createTask(payload)
         .then(task => {
           this.router.navigate(['/home']);
-          return new CreateTaskSuccess(task);
+          return new TasksActions.CreateTaskSuccess(task);
         })
-        .catch(err => new CreateTaskError(err))
+        .catch(err => new TasksActions.CreateTaskError(err))
   );
 
   @Effect() deleteTask$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.DELETE_TASK)
-    .map((action: DeleteTask) => action.payload)
+    .map((action: TasksActions.DeleteTask) => action.payload)
     .switchMap(payload =>
       this.taskPromiseService.deleteTask(payload)
         .then(task => {
-          return new DeleteTaskSuccess(task);
+          return new TasksActions.DeleteTaskSuccess(task);
         })
-        .catch(err => new DeleteTaskError(err))
+        .catch(err => new TasksActions.DeleteTaskError(err))
   );
 
   constructor(
