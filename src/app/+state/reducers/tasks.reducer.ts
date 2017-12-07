@@ -29,12 +29,7 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
-      const tasks = [...state.data];
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          error: action.payload
-      });
-      return newState;
+      return Object.assign({}, state, { error: action.payload });
     }
 
     case TasksActionTypes.CREATE_TASK: {
