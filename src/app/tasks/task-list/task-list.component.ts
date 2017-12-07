@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { AppState } from './../../+state/state/app.state';
+import { tasksStateSelector } from 'app/+state/state/tasks.state';
 import * as TasksActions from './../../+state/actions/tasks.actions';
 
 import { Task } from './../../models/task';
@@ -24,7 +25,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-    this.tasksState$ = this.store.select('tasks');
+    this.tasksState$ = this.store.select(tasksStateSelector);
 
     this.store.dispatch(new TasksActions.GetTasks());
   }

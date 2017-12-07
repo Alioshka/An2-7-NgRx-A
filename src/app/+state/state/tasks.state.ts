@@ -1,3 +1,5 @@
+import { createFeatureSelector } from '@ngrx/store';
+
 import { Task } from './../../models/task';
 
 export interface TasksState {
@@ -11,3 +13,5 @@ export const intitialState: TasksState = {
   selected: -1,
   error: null
 };
+
+export const tasksStateSelector = createFeatureSelector<TasksState>('tasks');
