@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { State } from './../../+state/state/main-state';
-import { DeleteTask, UpdateTask, GetTasks } from './../../+state/actions/tasks.actions';
+import { AppState } from './../../+state/state/app.state';
+import * as TasksActions from './../../+state/actions/tasks.actions';
 
 import { Task } from './../../models/task';
+import { TaskPromiseService } from './../services/task-promise.service';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -18,14 +19,14 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store<State>
+    private store: Store<AppState>
   ) { }
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
     this.tasksState$ = this.store.select('tasks');
 
-    this.store.dispatch(new GetTasks());
+    this.store.dispatch(new TasksActions.GetTasks());
   }
 
   createTask() {
@@ -36,11 +37,12 @@ export class TaskListComponent implements OnInit {
   completeTask(task: Task): void {
     const t = {...task};
     t.done = true;
-    this.store.dispatch(new UpdateTask(t));
+    this.store.dispatch(new TasksActions.UpdateTask(t));
+
   }
 
   deleteTask(task: Task) {
-    this.store.dispatch(new DeleteTask(task));
+    this.store.dispatch(new TasksActions.DeleteTask(task));
   }
 
 }
