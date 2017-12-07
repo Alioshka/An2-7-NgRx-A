@@ -4,11 +4,8 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
-import {
-  TasksActionTypes,
-  GetTasksSuccess, GetTasksError,
-  GetTask, GetTaskSuccess, GetTaskError
-} from './../actions/tasks.actions';
+import { TasksActionTypes } from './../actions/tasks.actions';
+import * as TasksActions from './../actions/tasks.actions';
 
 import {Observable} from 'rxjs/Observable';
 
@@ -21,17 +18,17 @@ export class TasksEffects {
     .ofType(TasksActionTypes.GET_TASKS)
     .switchMap(action =>
       this.taskPromiseService.getTasks()
-        .then(tasks => new GetTasksSuccess(tasks) )
-        .catch(err => new GetTasksError(err))
+        .then(tasks => new TasksActions.GetTasksSuccess(tasks) )
+        .catch(err => new TasksActions.GetTasksError(err))
     );
 
   @Effect() getTask$: Observable<Action> = this.actions$
     .ofType(TasksActionTypes.GET_TASK)
-    .map((action: GetTask) => action.payload)
+    .map((action: TasksActions.GetTask) => action.payload)
     .switchMap(payload =>
       this.taskPromiseService.getTask(<number>payload)
-        .then(task => new GetTaskSuccess(task) )
-        .catch(err => new GetTaskError(err))
+        .then(task => new TasksActions.GetTaskSuccess(task) )
+        .catch(err => new TasksActions.GetTaskError(err))
     );
 
   constructor(

@@ -4,18 +4,18 @@ import { Task } from './../../models/task';
 
 // Actions
 // [Tasks] - namespace
-export const TasksActionTypes = {
-  GET_TASKS: '[Tasks] GET_TASKS',
-  GET_TASKS_SUCCESS: '[Tasks] GET_TASKS_SUCCESS',
-  GET_TASKS_ERROR: '[Tasks] GET_TASKS_ERROR',
-  GET_TASK:    '[Tasks] GET_TASK',
-  GET_TASK_SUCCESS:    '[Tasks] GET_TASK_SUCCESS',
-  GET_TASK_ERROR:    '[Tasks] GET_TASK_ERROR',
-  CREATE_TASK: '[Tasks] CREATE_TASK',
-  UPDATE_TASK: '[Tasks] UPDATE_TASK',
-  DELETE_TASK: '[Tasks] DELETE_TASK',
-  DONE_TASK:   '[Tasks] DONE_TASK'
-};
+export class TasksActionTypes {
+  static readonly GET_TASKS         = '[Tasks] GET_TASKS';
+  static readonly GET_TASKS_SUCCESS = '[Tasks] GET_TASKS_SUCCESS';
+  static readonly GET_TASKS_ERROR   = '[Tasks] GET_TASKS_ERROR';
+  static readonly GET_TASK          = '[Tasks] GET_TASK';
+  static readonly GET_TASK_SUCCESS  = '[Tasks] GET_TASK_SUCCESS';
+  static readonly GET_TASK_ERROR    = '[Tasks] GET_TASK_ERROR';
+  static readonly CREATE_TASK       = '[Tasks] CREATE_TASK';
+  static readonly UPDATE_TASK       = '[Tasks] UPDATE_TASK';
+  static readonly DELETE_TASK       = '[Tasks] DELETE_TASK';
+  static readonly DONE_TASK         = '[Tasks] DONE_TASK';
+}
 
 // Action Creators
 export class GetTasks implements Action {
