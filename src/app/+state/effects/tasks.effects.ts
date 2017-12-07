@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 // @Ngrx
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
-import { TasksActionTypes, GetTasksSuccess, GetTasksError } from './../actions/tasks.actions';
+import { TasksActionTypes } from './../actions/tasks.actions';
+import * as TasksActions from './../actions/tasks.actions';
 
 import {Observable} from 'rxjs/Observable';
 
@@ -16,8 +17,8 @@ export class TasksEffects {
     .ofType(TasksActionTypes.GET_TASKS)
     .switchMap(action =>
       this.taskPromiseService.getTasks()
-        .then(tasks => new GetTasksSuccess(tasks) )
-        .catch(err => new GetTasksError(err))
+        .then(tasks => new TasksActions.GetTasksSuccess(tasks) )
+        .catch(err => new TasksActions.GetTasksError(err))
     );
 
   constructor(

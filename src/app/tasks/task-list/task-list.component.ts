@@ -3,11 +3,10 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { State } from './../../+state/state/main-state';
-import { DoneTask, GetTasks } from './../../+state/actions/tasks.actions';
+import { AppState } from './../../+state/state/app.state';
+import * as TasksActions from './../../+state/actions/tasks.actions';
 
 import { Task } from './../../models/task';
-import { TaskArrayService } from './../services/task-array.service';
 import { TaskPromiseService } from './../services/task-promise.service';
 
 @Component({
@@ -20,16 +19,15 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private taskArrayService: TaskArrayService,
     private taskPromiseService: TaskPromiseService,
-    private store: Store<State>
+    private store: Store<AppState>
   ) { }
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
     this.tasksState$ = this.store.select('tasks');
 
-    this.store.dispatch(new GetTasks());
+    this.store.dispatch(new TasksActions.GetTasks());
   }
 
   createTask() {
@@ -38,7 +36,7 @@ export class TaskListComponent implements OnInit {
   }
 
   completeTask(task: Task): void {
-    this.store.dispatch(new DoneTask(task));
+    this.store.dispatch(new TasksActions.DoneTask(task));
   }
 
   deleteTask(task: Task) {
