@@ -20,7 +20,6 @@ export class TasksActionTypes {
   static readonly DELETE_TASK         = '[Tasks] DELETE_TASK';
   static readonly DELETE_TASK_SUCCESS = '[Tasks] DELETE_TASK_SUCCESS';
   static readonly DELETE_TASK_ERROR   = '[Tasks] DELETE_TASK_ERROR';
-  static readonly DONE_TASK           = '[Tasks] DONE_TASK';
 }
 
 // Action Creators
