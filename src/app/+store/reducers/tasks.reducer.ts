@@ -1,5 +1,5 @@
-import { TasksActionTypes, TasksActions } from './../actions/tasks.actions';
-import { TasksState, intitialState } from '../state/tasks.state';
+import { TasksActionTypes, TasksActions } from './../actions';
+import { TasksState, intitialState } from './../state/tasks.state';
 
 import { Task } from './../../models/task';
 
@@ -10,62 +10,54 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
 
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
-      const tasks = [...state.data];
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          selected: -1,
-          error: null
-      });
-      return newState;
+      return {
+        ...state,
+        ...{ loading: true }
+      };
     }
 
     case TasksActionTypes.GET_TASKS_SUCCESS: {
       console.log('GET_TASKS_SUCCESS action being handled!');
-      const tasks = [...<Array<Task>>action.payload];
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          selected: -1,
-          error: null
-      });
-      return newState;
+      const data = [...<Array<Task>>action.payload];
+      return {
+        ...state,
+        ...{ data, loading: false, loaded: true }
+      };
     }
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
-      return Object.assign({}, state, { error: action.payload });
+      const error = action.payload;
+      return {
+        ...state,
+        ...{ loading: false, error }
+      };
     }
 
     case TasksActionTypes.GET_TASK: {
       console.log('GET_TASK action being handled!');
-      const tasks = [...state.data];
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          selected: -1,
-          error: null
-      });
-      return newState;
+      return {
+        ...state,
+        ...{ loading: true }
+      };
     }
 
     case TasksActionTypes.GET_TASK_SUCCESS: {
       console.log('GET_TASK_SUCCESS action being handled!');
-
-      const task = { ...<Task>action.payload };
-      const tasks = [...state.data];
-      const index = tasks.findIndex(t => t.id === task.id);
-
-      tasks[index] = task;
-
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          selected: index,
-          error: null
-      });
-      return newState;
+      const selectedTask = { ...<Task>action.payload };
+      return {
+        ...state,
+        ...{ loading: false, loaded: true, selectedTask }
+      };
     }
 
     case TasksActionTypes.GET_TASK_ERROR: {
       console.log('GET_TASK_ERROR action being handled!');
-      return Object.assign({}, state, { error: action.payload });
+      const error = action.payload;
+      return {
+        ...state,
+        ...{ loading: false, error }
+      };
     }
 
     case TasksActionTypes.CREATE_TASK: {
@@ -86,20 +78,17 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
     case TasksActionTypes.DONE_TASK: {
       console.log('DONE_TASK action being handled!');
 
-      const tasks = state.data.map(task => {
+      const data = state.data.map(task => {
         if (task.id === (<Task>action.payload).id) {
           return {...action.payload, ...{done: true}};
         } else {
           return task;
         }
       });
-
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          seleced: -1,
-          error: null
-      });
-      return newState;
+      return {
+        ...state,
+        ...{ data, error: null }
+      };
     }
 
     default: {

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { TasksModule } from './tasks/tasks.module';
 
@@ -25,6 +26,8 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { MyInterceptor } from './services/interceptors.service';
 
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +41,8 @@ import { MyInterceptor } from './services/interceptors.service';
     TasksModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
     AuthGuard,
