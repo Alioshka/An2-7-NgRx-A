@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
-import { reducers, CustomSerializer } from './+state/state/router.state';
+import { reducers, CustomSerializer } from './+store/state/router.state';
 
 import { TasksModule } from './tasks/tasks.module';
 
@@ -54,7 +54,6 @@ import { environment } from '../environments/environment';
     // add this line if you don't have access to
     // index.html and you want to set base tag
     // { provide: APP_BASE_HREF, useValue: '/' }
-    
     MessagesService,
     {
       provide: HTTP_INTERCEPTORS,
