@@ -1,5 +1,5 @@
-import { TasksActionTypes, TasksActions } from './../actions/tasks.actions';
-import { TasksState, intitialState } from '../state/tasks.state';
+import { TasksActionTypes, TasksActions } from './../actions';
+import { TasksState, intitialState } from './../state/tasks.state';
 
 import { Task } from './../../models/task';
 
@@ -50,18 +50,14 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
     case TasksActionTypes.DONE_TASK: {
       console.log('DONE_TASK action being handled!');
 
-      const tasks = state.data.map(task => {
+      const data = state.data.map(task => {
         if (task.id === (<Task>action.payload).id) {
           return {...action.payload, ...{done: true}};
         } else {
           return task;
         }
       });
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          error: null
-      });
-      return newState;
+      return {...state, ...{data, error: null}};
     }
 
     default: {
