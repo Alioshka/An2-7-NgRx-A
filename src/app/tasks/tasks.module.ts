@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './../+state/reducers/tasks.reducer';
+import { reducer } from './../+store/reducers/tasks.reducer';
 
 import { TasksRoutingModule } from './tasks.routing.module';
 
