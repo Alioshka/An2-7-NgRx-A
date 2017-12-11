@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from './../../+store';
+import { AppState, TasksState } from './../../+store';
 
 import { Task } from './../../models/task';
 import { TaskPromiseService } from './../services/task-promise.service';
@@ -14,7 +14,7 @@ import { TaskPromiseService } from './../services/task-promise.service';
 })
 export class TaskListComponent implements OnInit {
   tasks: Array<Task>;
-  tasksState$: Store<any>;
+  tasksState$: Store<TasksState>;
 
   constructor(
     private router: Router,
