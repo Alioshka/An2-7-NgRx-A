@@ -9,27 +9,28 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
   switch (action.type) {
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
-      const tasks = [...state.data];
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          error: null
-      });
-      return newState;
+      return {
+        ...state,
+        ...{ loading: true }
+      };
     }
 
     case TasksActionTypes.GET_TASKS_SUCCESS: {
       console.log('GET_TASKS_SUCCESS action being handled!');
-      const tasks = [...<Array<Task>>action.payload];
-      const newState = Object.assign({}, state, {
-          data: tasks,
-          error: null
-      });
-      return newState;
+      const data = [...<Array<Task>>action.payload];
+      return {
+        ...state,
+        ...{ data, loading: false, loaded: true }
+      };
     }
 
     case TasksActionTypes.GET_TASKS_ERROR: {
       console.log('GET_TASKS_ERROR action being handled!');
-      return Object.assign({}, state, { error: action.payload });
+      const error = action.payload;
+      return {
+        ...state,
+        ...{ loading: false, error }
+      };
     }
 
     case TasksActionTypes.CREATE_TASK: {
@@ -57,7 +58,10 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
           return task;
         }
       });
-      return {...state, ...{data, error: null}};
+      return {
+        ...state,
+        ...{ data, error: null }
+      };
     }
 
     default: {
