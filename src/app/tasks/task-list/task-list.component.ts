@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from './../../+state/state/app.state';
+import { AppState } from './../../+store';
 
 import { Task } from './../../models/task';
 import { TaskPromiseService } from './../services/task-promise.service';
