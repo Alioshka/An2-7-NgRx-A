@@ -2,12 +2,16 @@ import { Task } from './../../models/task';
 
 export interface TasksState {
   data: Array<Task>;
-  selected: number;
-  error: string;
+  selectedTask: Task;
+  loading: boolean;
+  loaded: boolean;
+  error: Error | string;
 }
 
 export const intitialState: TasksState = {
   data: [],
-  selected: -1,
+  selectedTask: null,
+  loading: false,
+  loaded: false,
   error: null
 };
