@@ -32,7 +32,8 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       if (task) {
         this.task = task;
       } else {
-        this.task = new Task(null, '', null, null);
+        // this.task = new Task(null, '', null, null);
+        this.store.dispatch(new TasksActions.GetTasks());
       }
     });
 
