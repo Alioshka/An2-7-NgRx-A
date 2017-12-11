@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { AppState } from './../../+state/state/app.state';
-import { TasksState, tasksStateSelector } from 'app/+state/state/tasks.state';
+import { selectedTaskSelector } from './../../+state/state/tasks.state';
 import * as TasksActions from './../../+state/actions/tasks.actions';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -17,7 +17,6 @@ import { Task } from './../../models/task';
 })
 export class TaskFormComponent implements OnInit, OnDestroy {
   task: Task;
-  tasksState$: Store<TasksState>;
 
   private sub: Subscription;
 
@@ -28,11 +27,14 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.task = new Task(null, '', null, null);
-
-    this.tasksState$ = this.store.select(tasksStateSelector);
-    this.sub = this.tasksState$.subscribe(tasksState =>
-      this.task = {...tasksState.data[tasksState.selected]});
+    this.sub = this.store.select(selectedTaskSelector)
+    .subscribe(task => {
+      if (task) {
+        this.task = task;
+      } else {
+        this.task = new Task(null, '', null, null);
+      }
+    });
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');

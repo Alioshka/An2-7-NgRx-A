@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { AppState } from './../../+state/state/app.state';
-import { tasksStateSelector } from 'app/+state/state/tasks.state';
+import { tasksErrorSelector, tasksDataSelector } from './../../+state/state/tasks.state';
 import * as TasksActions from './../../+state/actions/tasks.actions';
 
 import { Task } from './../../models/task';
@@ -15,8 +15,9 @@ import { TaskPromiseService } from './../services/task-promise.service';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Array<Task>;
-  tasksState$: Store<any>;
+  // tasks: Array<Task>;
+  tasks$: Store<Array<Task>>;
+  tasksError$: Store<string>;
 
   constructor(
     private router: Router,
@@ -25,7 +26,8 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-    this.tasksState$ = this.store.select(tasksStateSelector);
+    this.tasks$ = this.store.select(tasksDataSelector);
+    this.tasksError$ = this.store.select(tasksErrorSelector);
 
     this.store.dispatch(new TasksActions.GetTasks());
   }

@@ -1,4 +1,4 @@
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { Task } from './../../models/task';
 
@@ -15,3 +15,6 @@ export const intitialState: TasksState = {
 };
 
 export const tasksStateSelector = createFeatureSelector<TasksState>('tasks');
+export const tasksDataSelector = createSelector(tasksStateSelector, (state: TasksState) => state.data);
+export const tasksErrorSelector = createSelector(tasksStateSelector, (state: TasksState) => state.error);
+export const selectedTaskSelector = createSelector(tasksStateSelector, (state: TasksState) => state.data[state.selected]);
