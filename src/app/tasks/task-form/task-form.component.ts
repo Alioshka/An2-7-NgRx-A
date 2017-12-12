@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState, getSelectedTask } from './../../+store';
+import { AppState, getSelectedTaskByUrl } from './../../+store';
 import * as TasksActions from './../../+store/actions/tasks.actions';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -26,15 +26,8 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.sub = this.store.select(getSelectedTask)
-    .subscribe(task => {
-      if (task) {
-        this.task = task;
-      } else {
-        // this.task = new Task(null, '', null, null);
-        this.store.dispatch(new TasksActions.GetTasks());
-      }
-    });
+    this.sub = this.store.select(getSelectedTaskByUrl)
+      .subscribe(task => this.task = task);
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
