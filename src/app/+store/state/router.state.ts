@@ -10,13 +10,14 @@ export interface RouterStateUrl {
     url: string;
     queryParams: Params;
     params: Params;
+    fragment: string;
 }
 
 export interface RouterState {
     router: RouterReducerState<RouterStateUrl>;
 }
 
-export const reducers: ActionReducerMap<RouterState> = {
+export const routerReducers: ActionReducerMap<RouterState> = {
     router: routerReducer
 };
 
@@ -29,8 +30,8 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
         while (state.firstChild) {
             state = state.firstChild;
         }
-        const { params } = state;
+        const { params, fragment } = state;
 
-        return { url, queryParams, params };
+        return { url, queryParams, params, fragment };
     }
 }
