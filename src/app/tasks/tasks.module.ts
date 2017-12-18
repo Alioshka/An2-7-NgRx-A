@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './../+store/reducers/tasks.reducer';
+import { tasksReducer } from './../+store/reducers';
 
 import { TasksRoutingModule } from './tasks.routing.module';
 
@@ -27,7 +27,7 @@ import {
     CommonModule,
     FormsModule,
     TasksRoutingModule,
-    StoreModule.forFeature('tasks', reducer)
+    StoreModule.forFeature('tasks', tasksReducer)
   ],
   providers: [
     TaskArrayService,
