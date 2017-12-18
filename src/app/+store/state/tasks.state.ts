@@ -8,7 +8,7 @@ export interface TasksState {
   error: Error | string;
 }
 
-export const intitialState: TasksState = {
+export const intitialTasksState: TasksState = {
   data: [],
   selectedTask: null,
   loading: false,

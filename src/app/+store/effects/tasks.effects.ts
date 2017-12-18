@@ -8,7 +8,7 @@ import { TasksActionTypes } from './../actions';
 import * as TasksActions from './../actions/tasks.actions';
 
 import { Observable } from 'rxjs/Observable';
-import { switchMap, map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
 
@@ -70,8 +70,8 @@ export class TasksEffects {
       map((action: TasksActions.DeleteTask) => action.payload),
       switchMap(payload =>
         this.taskPromiseService.deleteTask(payload)
-          .then(task => {
-            return new TasksActions.DeleteTaskSuccess(task);
+          .then(() => {
+            return new TasksActions.DeleteTaskSuccess(payload);
           })
           .catch(err => new TasksActions.DeleteTaskError(err))
       )

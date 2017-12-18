@@ -2,7 +2,7 @@ import { ActionReducerMap } from '@ngrx/store';
 
 import { TasksState } from './tasks.state';
 import { UsersState } from './users.state';
-import { reducer, usersReducer} from './../reducers';
+import { tasksReducer, usersReducer } from './../reducers';
 
 export interface AppState {
   tasks: TasksState;
@@ -10,7 +10,7 @@ export interface AppState {
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-  tasks: reducer,
+  tasks: tasksReducer,
   users: usersReducer
 };
 
