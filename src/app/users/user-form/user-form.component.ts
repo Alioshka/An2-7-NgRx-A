@@ -30,13 +30,9 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   ) { }
 
   ngOnInit(): void {
-    this.user = new User(null, '', '');
-
-    // data is an observable object
-    // which contains custom and resolve data
     this.route.data.subscribe(data => {
-      this.user = Object.assign({}, data.user);
-      this.originalUser = Object.assign({}, data.user);
+      this.user = {...data.user};
+      this.originalUser = {...data.user};
     });
   }
 

@@ -1,51 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import 'rxjs/add/operator/switchMap';
+import { Store } from '@ngrx/store';
+import * as UsersActions from './../../+store/actions/users.actions';
+import { AppState, getUsers, getUsersError, getEditedUser } from './../../+store';
 
 import { User } from './../../models/user';
-import { UserArrayService } from './../services/user-array.service';
-import { UserObservableService } from './../services/user-observable.service';
 import { AutoUnsubscribe } from './../../decorators';
 
 @Component({
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-@AutoUnsubscribe('subscriptions')
+@AutoUnsubscribe('subscription', false)
 export class UserListComponent implements OnInit {
-  users: Array<User>;
+  users$: Store<Array<User>>;
   errorMessage: string;
+  usersError$: Store<Error | string>;
 
-  private subscriptions: Subscription[] = [];
+  private subscription: Subscription;
   private editedUser: User;
 
   constructor(
-    private userArrayService: UserArrayService,
-    private userObservableService: UserObservableService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<AppState>,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    const sub = this.userObservableService.getUsers()
-      .subscribe(
-        users => this.users = users,
-        error => this.errorMessage = <any>error
-      );
-    this.subscriptions.push(sub);
+    this.users$ = this.store.select(getUsers);
+    this.usersError$ = this.store.select(getUsersError);
+    this.store.dispatch(new UsersActions.GetUsers());
 
     // listen id from UserFormComponent
-    this.route.paramMap
-      .switchMap((params: Params) => this.userArrayService.getUser(+params.get('id')))
-      .subscribe(
-        (user: User) => {
-          this.editedUser = Object.assign({}, user);
-          console.log(`Last time you edited user ${JSON.stringify(this.editedUser)}`);
-        },
-        (err) => console.log(err)
-      );
-
+    this.subscription = this.store.select(getEditedUser)
+    .subscribe(
+      user => {
+        this.editedUser = user;
+        console.log(`Last time you edited user ${JSON.stringify(this.editedUser)}`);
+      }
+    );
   }
 
   isEdited(user: User) {
@@ -56,11 +51,15 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(user: User) {
-    this.userObservableService.deleteUser(user)
-    .subscribe(
-             () => this.users = this.users.filter(u => u !== user),
-             err => console.log(err)
-       );
+    this.store.dispatch(new UsersActions.DeleteUser(user));
+  }
+
+  editUser(user: User) {
+    const link = ['/users/edit', user.id];
+    this.router.navigate(link);
+    // or
+    // const link = ['edit', user.id];
+    // this.router.navigate(link, {relativeTo: this.route});
   }
 
 }

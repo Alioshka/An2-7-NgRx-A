@@ -1,13 +1,16 @@
 import { ActionReducerMap } from '@ngrx/store';
 
 import { TasksState } from './tasks.state';
-import * as fromTasks from './../reducers';
+import { UsersState } from './users.state';
+import { reducer, usersReducer} from './../reducers';
 
 export interface AppState {
   tasks: TasksState;
+  users: UsersState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-  tasks: fromTasks.reducer
+  tasks: reducer,
+  users: usersReducer
 };
 

@@ -1,7 +1,4 @@
-import { TasksEffects } from './tasks.effects';
-
-export const effects: any[] = [TasksEffects];
-
 export * from './tasks.effects';
+export * from './users.effects';
 
 

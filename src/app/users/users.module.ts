@@ -6,12 +6,17 @@ import { UsersRoutingModule, usersRouterComponents } from './users.routing.modul
 
 import { UserComponent, UserArrayService, UserObservableService } from '.';
 import { UsersAPI, usersBaseUrl } from './users.config';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { UsersEffects, usersReducer } from 'app/+store';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    StoreModule.forFeature('users', usersReducer),
+    EffectsModule.forFeature([UsersEffects])
   ],
   declarations: [
     usersRouterComponents,

@@ -1,30 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
+
+// NgRx
+import { Store } from '@ngrx/store';
+import { AppState, getSelectedUserByUrl } from './../+store';
+
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 import { User } from './../models/user';
-
-import { UserObservableService } from './../users';
 
 @Injectable()
 export class UserResolveGuard implements Resolve<User> {
 
   constructor(
-    private userObservableService: UserObservableService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>,
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<User> {
-    const id = +route.paramMap.get('id');
-    if (id) {
-      return this.userObservableService.getUser(id)
-        .catch(() => {
-          this.router.navigate(['/users']);
-          return Observable.of(null);
-        });
-    }
-    else {
-      return Observable.of(new User(null, '', ''));
-    }
+    let user$: Observable<User>;
+
+    // TODO: avoid subscribe
+    // TODO: не работает переадресация. если сначала зайти на форму редактирования задачи,
+    // вернуться назад, затем зайти на форму редактирования зпользователя,
+    // затем снова ренуться и зайти на форму редактирования задачи, то уже возврат будет на список пользователей.
+    this.store.select(getSelectedUserByUrl)
+    .subscribe(user => {
+      if (user) {
+        user$ = of(user);
+      } else {
+        this.router.navigate(['/users']);
+        user$ = of(null);
+      }
+    });
+    return user$;
   }
 }
