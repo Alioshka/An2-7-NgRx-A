@@ -4,7 +4,7 @@ export interface TasksState {
   data: Array<Task>;
 }
 
-export const intitialState: TasksState = {
+export const intitialTasksState: TasksState = {
   data: [
     new Task(1, 'Estimate', 1, 8, 8, true),
     new Task(2, 'Create', 2, 8, 4, false),
