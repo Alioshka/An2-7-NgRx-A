@@ -59,14 +59,12 @@ export class CreateTask implements Action {
 
 export class CreateTaskSuccess implements Action {
   readonly type = TasksActionTypes.CREATE_TASK_SUCCESS;
-
   constructor(public payload: Task) { }
 }
 
 export class CreateTaskError implements Action {
   readonly type = TasksActionTypes.CREATE_TASK_ERROR;
-
-  constructor(public payload: Error) { }
+  constructor(public payload: Error | string) { }
 }
 
 export class UpdateTask implements Action {
