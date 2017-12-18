@@ -1,9 +1,12 @@
 import { TasksActionTypes, TasksActions } from './../actions';
-import { TasksState, intitialState } from './../state/tasks.state';
+import { TasksState, intitialTasksState } from './../state/tasks.state';
 
 import { Task } from '../../models/task';
 
-export function reducer( state = intitialState, action: TasksActions ): TasksState {
+export function tasksReducer(
+  state = intitialTasksState,
+  action: TasksActions
+): TasksState {
   console.log(`Reducer: Action came in! ${action.type}`);
 
   switch (action.type) {
@@ -32,12 +35,15 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
 
       const data = state.data.map(task => {
         if (task.id === (<Task>action.payload).id) {
-          return {...action.payload, ...{done: true}};
+          return {...action.payload, done: true};
         } else {
           return task;
         }
       });
-      return {...state, ...{data}};
+      return {
+        ...state,
+        data
+      };
     }
 
     default: {
