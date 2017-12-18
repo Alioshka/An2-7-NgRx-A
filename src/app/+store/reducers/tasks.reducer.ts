@@ -78,10 +78,7 @@ export function tasksReducer(
 
     case TasksActionTypes.UPDATE_TASK: {
       console.log('UPDATE_TASK action being handled!');
-      return {
-        ...state,
-        ...{ loading: true }
-      };
+      return {...state};
     }
 
     case TasksActionTypes.UPDATE_TASK_SUCCESS: {
@@ -94,7 +91,7 @@ export function tasksReducer(
 
       return {
         ...state,
-        ...{ data, loading: false, loaded: true }
+        data
       };
     }
 
@@ -103,7 +100,7 @@ export function tasksReducer(
       const error = action.payload;
       return {
         ...state,
-        ...{ loading: false, error }
+        error
       };
     }
 
