@@ -70,8 +70,8 @@ export class TasksEffects {
       map((action: TasksActions.DeleteTask) => action.payload),
       switchMap(payload =>
         this.taskPromiseService.deleteTask(payload)
-          .then(task => {
-            return new TasksActions.DeleteTaskSuccess(task);
+          .then(() => {
+            return new TasksActions.DeleteTaskSuccess(payload);
           })
           .catch(err => new TasksActions.DeleteTaskError(err))
       )
