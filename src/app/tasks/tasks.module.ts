@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { reducer } from './../+store/reducers/tasks.reducer';
-import { TasksEffects } from '../+store/effects/tasks.effects';
+import { tasksReducer } from './../+store/reducers';
+import { TasksEffects } from '../+store/effects';
 
 import { TasksRoutingModule } from './tasks.routing.module';
 
@@ -29,7 +29,7 @@ import {
     CommonModule,
     FormsModule,
     TasksRoutingModule,
-    StoreModule.forFeature('tasks', reducer),
+    StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TasksEffects])
   ],
   providers: [
