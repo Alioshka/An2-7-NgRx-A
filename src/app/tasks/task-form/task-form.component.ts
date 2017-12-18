@@ -38,7 +38,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
-        this.store.dispatch(new TasksActions.GetTask(id));
+        this.store.dispatch(new TasksActions.GetTask(+id));
       }
     });
   }
