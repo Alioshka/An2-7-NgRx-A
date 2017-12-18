@@ -25,13 +25,11 @@ export class GetTasks implements Action {
 
 export class GetTasksSuccess implements Action {
   readonly type = TasksActionTypes.GET_TASKS_SUCCESS;
-
   constructor(public payload: Task[]) { }
 }
 
 export class GetTasksError implements Action {
   readonly type = TasksActionTypes.GET_TASKS_ERROR;
-
   constructor(public payload: Error | string) { }
 }
 
@@ -42,14 +40,12 @@ export class GetTask implements Action {
 
 export class GetTaskSuccess implements Action {
   readonly type = TasksActionTypes.GET_TASK_SUCCESS;
-
   constructor(public payload: Task) { }
 }
 
 export class GetTaskError implements Action {
   readonly type = TasksActionTypes.GET_TASK_ERROR;
-
-  constructor(public payload: Error) { }
+  constructor(public payload: Error | string) { }
 }
 
 export class CreateTask implements Action {

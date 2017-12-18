@@ -45,7 +45,7 @@ export function tasksReducer(
       console.log('GET_TASK action being handled!');
       return {
         ...state,
-        ...{ loading: true }
+        loading: true
       };
     }
 
@@ -54,7 +54,9 @@ export function tasksReducer(
       const selectedTask = { ...<Task>action.payload };
       return {
         ...state,
-        ...{ loading: false, loaded: true, selectedTask }
+        loading: false,
+        loaded: true,
+        selectedTask
       };
     }
 
@@ -63,7 +65,9 @@ export function tasksReducer(
       const error = action.payload;
       return {
         ...state,
-        ...{ loading: false, error }
+        loading: false,
+        loaded: false,
+        error
       };
     }
 
