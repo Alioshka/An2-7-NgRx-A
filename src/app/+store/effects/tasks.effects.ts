@@ -8,7 +8,7 @@ import { TasksActionTypes } from './../actions';
 import * as TasksActions from './../actions/tasks.actions';
 
 import { Observable } from 'rxjs/Observable';
-import { switchMap, map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../tasks/services/task-promise.service';
 
