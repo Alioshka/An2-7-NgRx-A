@@ -1,9 +1,12 @@
 import { TasksActionTypes, TasksActions } from './../actions';
-import { TasksState, intitialState } from './../state/tasks.state';
+import { TasksState, intitialTasksState } from './../state/tasks.state';
 
 import { Task } from './../../models/task';
 
-export function reducer( state = intitialState, action: TasksActions ): TasksState {
+export function tasksReducer(
+  state = intitialTasksState,
+  action: TasksActions
+): TasksState {
   console.log(`Reducer: Action came in! ${action.type}`);
 
   switch (action.type) {
@@ -12,7 +15,7 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
       console.log('GET_TASKS action being handled!');
       return {
         ...state,
-        ...{ loading: true }
+        loading: true
       };
     }
 
@@ -21,7 +24,9 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
       const data = [...<Array<Task>>action.payload];
       return {
         ...state,
-        ...{ data, loading: false, loaded: true }
+        data,
+        loading: false,
+        loaded: true
       };
     }
 
@@ -30,7 +35,9 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
       const error = action.payload;
       return {
         ...state,
-        ...{ loading: false, error }
+        loading: false,
+        loaded: false,
+        error
       };
     }
 
@@ -38,7 +45,7 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
       console.log('GET_TASK action being handled!');
       return {
         ...state,
-        ...{ loading: true }
+        loading: true
       };
     }
 
@@ -47,7 +54,9 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
       const selectedTask = { ...<Task>action.payload };
       return {
         ...state,
-        ...{ loading: false, loaded: true, selectedTask }
+        loading: false,
+        loaded: true,
+        selectedTask
       };
     }
 
@@ -56,7 +65,9 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
       const error = action.payload;
       return {
         ...state,
-        ...{ loading: false, error }
+        loading: false,
+        loaded: false,
+        error
       };
     }
 
@@ -106,14 +117,15 @@ export function reducer( state = intitialState, action: TasksActions ): TasksSta
 
       const data = state.data.map(task => {
         if (task.id === (<Task>action.payload).id) {
-          return {...action.payload, ...{done: true}};
+          return {...action.payload, done: true};
         } else {
           return task;
         }
       });
       return {
         ...state,
-        ...{ data, error: null }
+        data,
+        error: null
       };
     }
 
