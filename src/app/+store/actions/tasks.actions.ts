@@ -25,92 +25,77 @@ export class TasksActionTypes {
 // Action Creators
 export class GetTasks implements Action {
   readonly type = TasksActionTypes.GET_TASKS;
-
   constructor(public payload?: Task) { }
 }
 
 export class GetTasksSuccess implements Action {
   readonly type = TasksActionTypes.GET_TASKS_SUCCESS;
-
   constructor(public payload: Task[]) { }
 }
 
 export class GetTasksError implements Action {
   readonly type = TasksActionTypes.GET_TASKS_ERROR;
-
-  constructor(public payload: Error) { }
+  constructor(public payload: Error | string) { }
 }
 
 export class GetTask implements Action {
   readonly type = TasksActionTypes.GET_TASK;
-
-  constructor(public payload: string | number) { }
+  constructor(public payload: number) { }
 }
 
 export class GetTaskSuccess implements Action {
   readonly type = TasksActionTypes.GET_TASK_SUCCESS;
-
   constructor(public payload: Task) { }
 }
 
 export class GetTaskError implements Action {
   readonly type = TasksActionTypes.GET_TASK_ERROR;
-
-  constructor(public payload: Error) { }
+  constructor(public payload: Error | string) { }
 }
 
 export class CreateTask implements Action {
   readonly type = TasksActionTypes.CREATE_TASK;
-
   constructor(public payload: Task) { }
 }
 
 export class CreateTaskSuccess implements Action {
   readonly type = TasksActionTypes.CREATE_TASK_SUCCESS;
-
   constructor(public payload: Task) { }
 }
 
 export class CreateTaskError implements Action {
   readonly type = TasksActionTypes.CREATE_TASK_ERROR;
-
-  constructor(public payload: Error) { }
+  constructor(public payload: Error | string) { }
 }
 
 export class UpdateTask implements Action {
   readonly type = TasksActionTypes.UPDATE_TASK;
-
   constructor(public payload: Task) { }
 }
 
 export class UpdateTaskSuccess implements Action {
   readonly type = TasksActionTypes.UPDATE_TASK_SUCCESS;
-
   constructor(public payload: Task) { }
 }
 
 export class UpdateTaskError implements Action {
   readonly type = TasksActionTypes.UPDATE_TASK_ERROR;
-
-  constructor(public payload: Error) { }
+  constructor(public payload: Error | string) { }
 }
 
 export class DeleteTask implements Action {
   readonly type = TasksActionTypes.DELETE_TASK;
-
   constructor(public payload: Task) { }
 }
 
 export class DeleteTaskSuccess implements Action {
   readonly type = TasksActionTypes.DELETE_TASK_SUCCESS;
-
   constructor(public payload: Task) { }
 }
 
 export class DeleteTaskError implements Action {
   readonly type = TasksActionTypes.DELETE_TASK_ERROR;
-
-  constructor(public payload: Error) { }
+  constructor(public payload: Error | string) { }
 }
 
 export type TasksActions =
