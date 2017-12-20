@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
-import { routerReducers, CustomSerializer } from './+store';
+import { routerReducers, RouterEffects, CustomSerializer } from './+store';
 
 import { TasksModule } from './tasks/tasks.module';
 
@@ -43,7 +43,7 @@ import { environment } from '../environments/environment';
     TasksModule,
     AppRoutingModule,
     StoreModule.forRoot(routerReducers),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([RouterEffects]),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
