@@ -75,9 +75,13 @@ export class UsersEffects {
       UsersActionTypes.UPDATE_USER_SUCCESS
     )
     .pipe(
-      map(action => new RouterActions.Go({
-        path: ['/users']
-      }))
+      map(action => (<any>action).payload),
+      map(user => {
+        const path = user.id
+          ? ['/users', { id: user.id }]
+          : ['/users'];
+        return new RouterActions.Go({ path });
+      })
     );
 
   @Effect() deleteUser$: Observable<Action> = this.actions$

@@ -82,10 +82,12 @@ export function usersReducer (
           ...state.entities,
           [user.id]: user
         };
+        const originalUser = {...<User>action.payload};
 
         return {
           ...state,
-          entities
+          entities,
+          originalUser
         };
       }
 
