@@ -50,7 +50,7 @@ export class UsersEffects {
         this.userObservableService.updateUser(payload)
         .pipe(
             map(user => {
-                this.router.navigate(['/users']);
+                this.router.navigate(['/users', { id: user.id }]);
                 return new UsersActions.UpdateUserSuccess(user);
             }),
             catchError(err => of(new UsersActions.UpdateUserError(err)))

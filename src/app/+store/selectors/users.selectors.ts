@@ -5,6 +5,7 @@ import { User } from './../../models/user';
 import { getRouterState } from './../../+store/selectors/router.selectors';
 
 const getEntities = (state: UsersState) => state.entities;
+const getOriginalUser = (state: UsersState) => state.originalUser;
 const getLoaded = (state: UsersState) => state.loaded;
 const getLoading = (state: UsersState) => state.loading;
 const getError = (state: UsersState) => state.error;
@@ -12,6 +13,7 @@ const getError = (state: UsersState) => state.error;
 export const getUsersState = createFeatureSelector<UsersState>('users');
 
 const getUsersEntitites = createSelector(getUsersState, getEntities);
+export const getUsersOriginalUser = createSelector(getUsersState, getOriginalUser);
 export const getUsersLoaded = createSelector(getUsersState, getLoaded);
 export const getUsersLoading = createSelector(getUsersState, getLoading);
 export const getUsersError = createSelector(getUsersState, getError);

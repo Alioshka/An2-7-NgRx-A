@@ -1,38 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+
+// @Ngrx
+import { Store } from '@ngrx/store';
+import { AppState, getUsersOriginalUser } from './../../+store';
+import * as UsersActions from './../../+store/actions/users.actions';
+
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { switchMap } from 'rxjs/operators';
 
 import { User } from './../../models/user';
 import { DialogService } from './../../services/dialog.service';
 import { UserObservableService } from './../services/user-observable.service';
 import { CanComponentDeactivate } from './../../guards/can-component-deactivate.interface';
-import { AutoUnsubscribe } from './../../decorators';
-
-import 'rxjs/add/operator/switchMap';
 
 @Component({
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css'],
 })
-@AutoUnsubscribe()
 export class UserFormComponent implements OnInit, CanComponentDeactivate {
   user: User;
-  originalUser: User;
-
-  private sub: Subscription[] = [];
 
   constructor(
     private userObservableService: UserObservableService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.user = {...data.user};
-      this.originalUser = {...data.user};
     });
   }
 
@@ -43,19 +43,11 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
       this.user.lastName
     );
 
-    const method = user.id ? 'updateUser' : 'createUser';
-    const sub = this.userObservableService[method](user)
-      .subscribe(
-        () => {
-          this.originalUser = Object.assign({}, this.user);
-          user.id
-            // optional parameter: http://localhost:4200/users;id=2
-            ? this.router.navigate(['users', { id: user.id }])
-            : this.router.navigate(['users']);
-        },
-        error => console.log(error)
-      );
-    this.sub.push(sub);
+    if (user.id) {
+      this.store.dispatch(new UsersActions.UpdateUser(user));
+    } else {
+      this.store.dispatch(new UsersActions.CreateUser(user));
+    }
   }
 
   goBack() {
@@ -64,20 +56,27 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
     const flags = [];
-    for (const key in this.originalUser) {
-      if (this.originalUser[key] === this.user[key]) {
-        flags.push(true);
-      } else {
-        flags.push(false);
-      }
-    }
 
-    if (flags.every(el => el)) {
-      return true;
-    }
+    return this.store.select(getUsersOriginalUser)
+            .pipe(
+              switchMap(originalUser => {
+                for (const key in originalUser) {
+                  if (originalUser[key] === this.user[key]) {
+                    flags.push(true);
+                  } else {
+                    flags.push(false);
+                  }
+                }
 
-    // Otherwise ask the user with the dialog service and return its
-    // promise which resolves to true or false when the user decides
-    return this.dialogService.confirm('Discard changes?');
+                if (flags.every(el => el)) {
+                  return of(true);
+                }
+
+                // Otherwise ask the user with the dialog service and return its
+                // promise which resolves to true or false when the user decides
+                return this.dialogService.confirm('Discard changes?');
+              })
+            );
   }
+
 }
