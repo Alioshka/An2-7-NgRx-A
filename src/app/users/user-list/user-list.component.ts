@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Store } from '@ngrx/store';
 import * as UsersActions from './../../+store/actions/users.actions';
+import * as RouterActions from './../../+store/actions/router.actions';
 import { AppState, getUsers, getUsersError, getEditedUser } from './../../+store';
 
 import { User } from './../../models/user';
@@ -56,10 +57,10 @@ export class UserListComponent implements OnInit {
 
   editUser(user: User) {
     const link = ['/users/edit', user.id];
-    this.router.navigate(link);
-    // or
-    // const link = ['edit', user.id];
-    // this.router.navigate(link, {relativeTo: this.route});
+
+    this.store.dispatch(new RouterActions.Go({
+      path: link
+    }));
   }
 
 }

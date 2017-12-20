@@ -5,6 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState, getUsersOriginalUser } from './../../+store';
 import * as UsersActions from './../../+store/actions/users.actions';
+import * as RouterActions from './../../+store/actions/router.actions';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -51,7 +52,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   goBack() {
-    this.router.navigate(['./../../'], { relativeTo: this.route });
+    this.store.dispatch(new RouterActions.Back());
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
