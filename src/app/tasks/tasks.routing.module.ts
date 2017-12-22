@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TaskListComponent, TaskFormComponent } from '.';
+import { TasksStateLoadingGuard } from './guards/tasks-state-loading.guard';
 
 const routes: Routes = [
   {
     path: 'home',
     component: TaskListComponent,
+    canActivate: [TasksStateLoadingGuard],
     data: {
       title: 'Task Manager',
       meta: [{
@@ -32,6 +34,9 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes)
+  ],
+  providers: [
+    TasksStateLoadingGuard
   ],
   exports: [
     RouterModule

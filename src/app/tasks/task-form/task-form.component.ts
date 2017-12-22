@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
@@ -21,20 +21,12 @@ export class TaskFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
     this.sub = this.store.select(getSelectedTaskByUrl)
       .subscribe(task => this.task = task);
-
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.store.dispatch(new TasksActions.GetTask(+id));
-      }
-    });
   }
 
   ngOnDestroy(): void {
