@@ -1,7 +1,7 @@
 import { Task } from './../../models/task';
 
 export interface TasksState {
-  data: Array<Task>;
+  data: ReadonlyArray<Task>;
 }
 
 export const intitialTasksState: TasksState = {
