@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TaskListComponent, TaskFormComponent } from '.';
-import { TasksStateLoadingGuard } from './guards/tasks-state-loading.guard';
+import * as Guards from './guards';
 
 const routes: Routes = [
   {
     path: 'home',
     component: TaskListComponent,
-    canActivate: [TasksStateLoadingGuard],
+    canActivate: [Guards.TasksStateLoadingGuard],
     data: {
       title: 'Task Manager',
       meta: [{
@@ -27,7 +27,8 @@ const routes: Routes = [
   },
   {
     path: 'edit/:id',
-    component: TaskFormComponent
+    component: TaskFormComponent,
+    canActivate: [Guards.TaskExistGuard]
   }
 ];
 
@@ -36,7 +37,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers: [
-    TasksStateLoadingGuard
+    ...Guards.allGuards
   ],
   exports: [
     RouterModule
