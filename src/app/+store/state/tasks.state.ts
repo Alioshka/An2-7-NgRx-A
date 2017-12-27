@@ -2,10 +2,10 @@ import { Task } from './../../models/task';
 
 export interface TasksState {
   data: ReadonlyArray<Task>;
-  selectedTask: Task;
-  loading: boolean;
-  loaded: boolean;
-  error: Error | string;
+  selectedTask: Readonly<Task>;
+  readonly loading: boolean;
+  readonly loaded: boolean;
+  readonly error: Error | string;
 }
 
 export const intitialTasksState: TasksState = {
