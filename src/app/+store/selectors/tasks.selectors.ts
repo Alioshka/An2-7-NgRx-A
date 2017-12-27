@@ -17,7 +17,7 @@ export const getSelectedTaskByUrl = createSelector(
     getRouterState,
     (tasks, router): Task => {
         if (router.state.params.id) {
-            return tasks[router.state.params.id];
+            return tasks.find(task => task.id === +router.state.params.id);
         } else {
             return new Task(null, '', null, null);
         }
