@@ -8,6 +8,7 @@
   <task *ngFor='let task of (tasks$ | async)'
     [task]="task"
     (onComplete)="completeTask($event)"
-    (onDelete)="deleteTask($event)">
+    (onDelete)="deleteTask($event)"
+    (onEdit)="editTask($event)">
   </task>
 </div>
