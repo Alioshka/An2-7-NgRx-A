@@ -1,7 +1,7 @@
 import { Task } from './../../models/task';
 
 export interface TasksState {
-  data: Array<Task>;
+  data: ReadonlyArray<Task>;
   selectedTask: Task;
   loading: boolean;
   loaded: boolean;
