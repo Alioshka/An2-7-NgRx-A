@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
 import * as TasksActions from './../../+store/actions/tasks.actions';
+import * as RouterActions from './../../+store/actions/router.actions';
 import { AppState, getTasksData, getTasksError } from './../../+store';
 
 import { Task } from './../../models/task';
@@ -17,7 +17,6 @@ export class TaskListComponent implements OnInit {
   tasksError$: Store<Error | string>;
 
   constructor(
-    private router: Router,
     private store: Store<AppState>
   ) { }
 
@@ -28,8 +27,9 @@ export class TaskListComponent implements OnInit {
   }
 
   createTask() {
-    const link = ['/add'];
-    this.router.navigate(link);
+    this.store.dispatch(new RouterActions.Go({
+      path: ['/add']
+    }));
   }
 
   completeTask(task: Task): void {
@@ -39,6 +39,12 @@ export class TaskListComponent implements OnInit {
 
   deleteTask(task: Task) {
     this.store.dispatch(new TasksActions.DeleteTask(task));
+  }
+
+  editTask(task: Task) {
+    this.store.dispatch(new RouterActions.Go({
+      path: ['/edit', task.id]
+    }));
   }
 
 }

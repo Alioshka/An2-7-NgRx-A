@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
@@ -28,7 +27,6 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   private sub: Subscription;
 
   constructor(
-    private router: Router,
     private dialogService: DialogService,
     private store: Store<AppState>
   ) { }
