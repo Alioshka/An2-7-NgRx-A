@@ -13,7 +13,7 @@ import { Task } from './../../models/task';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks$: Store<Array<Task>>;
+  tasks$: Store<ReadonlyArray<Task>>;
   tasksError$: Store<Error | string>;
 
   constructor(
