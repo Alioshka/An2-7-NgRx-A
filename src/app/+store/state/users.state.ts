@@ -1,11 +1,11 @@
 import { User } from './../../models/user';
 
 export interface UsersState {
-  entities: { [id: number]: User };
-  originalUser: User;
-  loading: boolean;
-  loaded: boolean;
-  error: Error | string;
+  entities: Readonly<{ [id: number]: User }>;
+  originalUser: Readonly<User>;
+  readonly loading: boolean;
+  readonly loaded: boolean;
+  readonly error: Error | string;
 }
 
 export const intitialUsersState: UsersState = {
