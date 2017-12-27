@@ -14,7 +14,6 @@ import { TaskPromiseService } from './../services/task-promise.service';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Array<Task>;
   tasksState$: Store<TasksState>;
 
   constructor(
@@ -40,9 +39,9 @@ export class TaskListComponent implements OnInit {
   }
 
   deleteTask(task: Task) {
-    this.taskPromiseService.deleteTask(task)
-      .then(() => this.tasks = this.tasks.filter(t => t !== task))
-      .catch(err => console.log(err));
+    // this.taskPromiseService.deleteTask(task)
+    //   .then(() => this.tasks = this.tasks.filter(t => t !== task))
+    //   .catch(err => console.log(err));
   }
 
 }
