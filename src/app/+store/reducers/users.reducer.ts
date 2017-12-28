@@ -1,11 +1,11 @@
 import * as fromUsers from './../actions/users.actions';
 import { UsersActionTypes } from './../actions/users.actions';
-import { intitialUsersState, UsersState } from './../state/users.state';
+import { initialUsersState, UsersState } from './../state/users.state';
 
 import { User } from './../../models/user';
 
 export function usersReducer (
-    state = intitialUsersState,
+    state = initialUsersState,
     action: fromUsers.UsersActions
 ): UsersState {
     console.log(`Reducer: Action came in! ${action.type}`);

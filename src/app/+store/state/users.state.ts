@@ -8,7 +8,7 @@ export interface UsersState {
   readonly error: Error | string;
 }
 
-export const intitialUsersState: UsersState = {
+export const initialUsersState: UsersState = {
   entities: {},
   originalUser: null,
   loading: false,
