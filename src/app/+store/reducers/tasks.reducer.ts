@@ -1,10 +1,10 @@
 import { TasksActionTypes, TasksActions } from './../actions';
-import { TasksState, intitialTasksState } from './../state/tasks.state';
+import { TasksState, inititialTasksState } from './../state/tasks.state';
 
 import { Task } from '../../models/task';
 
 export function tasksReducer(
-  state = intitialTasksState,
+  state = inititialTasksState,
   action: TasksActions
 ): TasksState {
   console.log(`Reducer: Action came in! ${action.type}`);
