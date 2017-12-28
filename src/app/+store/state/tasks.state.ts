@@ -7,7 +7,7 @@ export interface TasksState {
   readonly error: Error | string;
 }
 
-export const intitialTasksState: TasksState = {
+export const inititialTasksState: TasksState = {
   data: [],
   loading: false,
   loaded: false,
