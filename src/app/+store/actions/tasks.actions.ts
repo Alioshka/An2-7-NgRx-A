@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { Task } from './../../models/task';
+import { Task } from './../../tasks/models/task.model';
 
 // Actions
 // [Tasks] - namespace
@@ -38,9 +38,9 @@ export class DeleteTask implements Action {
   constructor(public payload: Task) { }
 }
 
-export type TasksActions =
-  GetTasks |
-  GetTask |
-  CreateTask |
-  UpdateTask |
-  DeleteTask;
+export type TasksActions
+  = GetTasks
+  | GetTask
+  | CreateTask
+  | UpdateTask
+  | DeleteTask;
