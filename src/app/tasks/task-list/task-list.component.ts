@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState, TasksState } from './../../+store';
 
-import { Task } from './../../models/task';
-import { TaskPromiseService } from './../services/task-promise.service';
+import { Task } from './../models/task.model';
+import { TaskPromiseService } from './../services';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -32,9 +32,9 @@ export class TaskListComponent implements OnInit {
     this.router.navigate(link);
   }
 
-
   completeTask(task: Task): void {
     task.done = true;
+    // TODO: если что-то пошло не так, вывести ошибку
     this.taskPromiseService.updateTask(task);
   }
 
@@ -44,4 +44,8 @@ export class TaskListComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
+  editTask(task: Task): void {
+    const link = ['/edit', task.id];
+    this.router.navigate(link);
+  }
 }
