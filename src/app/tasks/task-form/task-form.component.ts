@@ -1,27 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { AppState, getSelectedTask } from './../../+store';
 import * as TasksActions from './../../+store/actions/tasks.actions';
 
+// rxjs
 import { Subscription } from 'rxjs/Subscription';
 
-import { Task } from './../../models/task';
+import { Task } from './../models/task.model';
+import { AutoUnsubscribe } from '../../core';
 
 @Component({
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
-export class TaskFormComponent implements OnInit, OnDestroy {
+@AutoUnsubscribe()
+export class TaskFormComponent implements OnInit {
   task: Task;
 
   private sub: Subscription;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
     private store: Store<AppState>
   ) { }
 
@@ -44,17 +48,8 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
-
   saveTask() {
-    const task = new Task(
-      this.task.id,
-      this.task.action,
-      this.task.priority,
-      this.task.estHours
-    );
+    const task = {...this.task};
 
     if (task.id) {
       this.store.dispatch(new TasksActions.UpdateTask(task));
@@ -64,6 +59,6 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
-    this.router.navigate(['/home']);
+    this.location.back();
   }
 }

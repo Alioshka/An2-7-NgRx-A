@@ -11,7 +11,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { routerReducers, CustomSerializer } from './+store';
 
+import { CoreModule } from './core/core.module';
 import { TasksModule } from './tasks/tasks.module';
+import { SharedModule } from './shared/shared.module';
 
 // add this line if you don't have access to
 // index.html and you want to set base tag
@@ -19,42 +21,33 @@ import { TasksModule } from './tasks/tasks.module';
 
 import { AppRoutingModule, appRouterComponents } from './app.routing.module';
 import { AppComponent } from './app.component';
-import { MessagesService } from './services';
-import { MessagesComponent } from './components';
-
-import { DialogService } from './services/dialog.service';
-
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './guards/auth.guard';
-import { MyInterceptor } from './services/interceptors.service';
+import { MyInterceptor } from './core/interceptors/my.interceptor';
 
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
-    appRouterComponents,
-    MessagesComponent
+    appRouterComponents
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     TasksModule,
-    AppRoutingModule,
+    CoreModule,
+    SharedModule,
     StoreModule.forRoot(routerReducers),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    // Instrumentation must be imported after importing StoreModule (config is optional)
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    AppRoutingModule
   ],
   providers: [
-    AuthGuard,
-    AuthService,
-    DialogService,
     // add this line if you don't have access to
     // index.html and you want to set base tag
     // { provide: APP_BASE_HREF, useValue: '/' }
-    MessagesService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MyInterceptor,
