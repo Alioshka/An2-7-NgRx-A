@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import * as TasksActions from './../../+store/actions/tasks.actions';
 import { AppState, TasksState } from './../../+store';
 
-import { Task } from './../../models/task';
+import { Task } from './../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -42,4 +42,8 @@ export class TaskListComponent implements OnInit {
     this.store.dispatch(new TasksActions.DeleteTask(task));
   }
 
+  editTask(task: Task): void {
+    const link = ['/edit', task.id];
+    this.router.navigate(link);
+  }
 }
