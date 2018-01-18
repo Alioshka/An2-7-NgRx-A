@@ -6,8 +6,8 @@ import { Store } from '@ngrx/store';
 import * as TasksActions from './../../+store/actions/tasks.actions';
 import { AppState, TasksState } from './../../+store';
 
-import { Task } from './../../models/task';
-import { TaskPromiseService } from './../services/task-promise.service';
+import { Task } from './../models/task.model';
+import { TaskPromiseService } from './../services';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -43,4 +43,8 @@ export class TaskListComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
+  editTask(task: Task): void {
+    const link = ['/edit', task.id];
+    this.router.navigate(link);
+  }
 }
