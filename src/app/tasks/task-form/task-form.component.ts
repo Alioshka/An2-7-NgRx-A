@@ -1,21 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
 import { AppState, TasksState } from './../../+store';
 import * as TasksActions from './../../+store/actions/tasks.actions';
 
+// rxjs
 import { Subscription } from 'rxjs/Subscription';
+import { switchMap } from 'rxjs/operators';
 
-import { Task } from './../../models/task';
-import { TaskPromiseService } from './../services/task-promise.service';
+import { Task } from './../models/task.model';
+import { TaskArrayService, TaskPromiseService } from './../services';
 
 @Component({
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
-export class TaskFormComponent implements OnInit, OnDestroy {
+export class TaskFormComponent implements OnInit {
   task: Task;
   tasksState$: Store<TasksState>;
 
@@ -23,38 +26,47 @@ export class TaskFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private taskPromiseService: TaskPromiseService,
-    private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
     private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
     this.task = new Task(null, '', null, null);
 
-    this.tasksState$ = this.store.select('tasks');
-    this.sub = this.tasksState$.subscribe(tasksState =>
-      this.task = tasksState.selectedTask);
+  //   this.tasksState$ = this.store.select('tasks');
+  //   this.sub = this.tasksState$.subscribe(tasksState =>
+  //     this.task = tasksState.selectedTask);
 
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.store.dispatch(new TasksActions.GetTask(+id));
-      }
-    });
+  //   this.route.paramMap.subscribe(params => {
+  //     const id = params.get('id');
+  //     if (id) {
+  //       this.store.dispatch(new TasksActions.GetTask(+id));
+  //     }
+  //   });
 
-  }
+  // }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
+  // ngOnDestroy(): void {
+  //   this.sub.unsubscribe();
+  // }
+
+    this.route.paramMap
+      .pipe(
+        switchMap((params: Params) => {
+          return params.get('id')
+          ? this.taskPromiseService.getTask(+params.get('id'))
+          : Promise.resolve(null);
+        })
+      )
+      .subscribe(
+        task => this.task = {...task},
+        err => console.log(err)
+    );
   }
 
   saveTask() {
-    const task = new Task(
-      this.task.id,
-      this.task.action,
-      this.task.priority,
-      this.task.estHours
-    );
+    const task = {...this.task};
 
     const method = task.id ? 'updateTask' : 'createTask';
     this.taskPromiseService[method](task)
@@ -62,6 +74,6 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
-    this.router.navigate(['/home']);
+    this.location.back();
   }
 }

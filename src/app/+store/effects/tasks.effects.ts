@@ -10,13 +10,17 @@ import * as TasksActions from './../actions/tasks.actions';
 import { Observable } from 'rxjs/Observable';
 import { map, switchMap } from 'rxjs/operators';
 
-import { TaskPromiseService } from './../../tasks/services/task-promise.service';
+import { TaskPromiseService } from './../../tasks/services';
 
 @Injectable()
 export class TasksEffects {
 
   @Effect() getTasks$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.GET_TASKS)
+    // Instead of ofType<TasksActions.GetTasks>(...) you can use ofType(...)
+    // It's optional.
+    // Specify the action type to allow type-safe mapping to other data on the action,
+    // including payload
+    .ofType<TasksActions.GetTasks>(TasksActionTypes.GET_TASKS)
     .pipe(
       switchMap(action =>
         this.taskPromiseService.getTasks()
