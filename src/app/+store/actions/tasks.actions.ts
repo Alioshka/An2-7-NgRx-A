@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { Task } from './../../models/task';
+import { Task } from './../../tasks/models/task.model';
 
 // Actions
 // [Tasks] - namespace
@@ -23,13 +23,11 @@ export class GetTasks implements Action {
 
 export class GetTasksSuccess implements Action {
   readonly type = TasksActionTypes.GET_TASKS_SUCCESS;
-
   constructor(public payload: Task[]) { }
 }
 
 export class GetTasksError implements Action {
   readonly type = TasksActionTypes.GET_TASKS_ERROR;
-
   constructor(public payload: Error | string) { }
 }
 
@@ -58,12 +56,12 @@ export class DoneTask implements Action {
   constructor(public payload: Task) { }
 }
 
-export type TasksActions =
-  GetTasks |
-  GetTasksSuccess |
-  GetTasksError |
-  GetTask |
-  CreateTask |
-  UpdateTask |
-  DeleteTask |
-  DoneTask;
+export type TasksActions
+  = GetTasks
+  | GetTasksSuccess
+  | GetTasksError
+  | GetTask
+  | CreateTask
+  | UpdateTask
+  | DeleteTask
+  | DoneTask;
