@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import * as TasksActions from './../../+store/actions/tasks.actions';
 import { AppState, TasksState, getTasksState } from './../../+store';
 
-import { Task } from './../../models/task';
+import { Task } from './../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -35,11 +35,14 @@ export class TaskListComponent implements OnInit {
   completeTask(task: Task): void {
     const doneTask = {...task, done: true};
     this.store.dispatch(new TasksActions.UpdateTask(doneTask));
-
   }
 
   deleteTask(task: Task) {
     this.store.dispatch(new TasksActions.DeleteTask(task));
   }
 
+  editTask(task: Task): void {
+    const link = ['/edit', task.id];
+    this.router.navigate(link);
+  }
 }
