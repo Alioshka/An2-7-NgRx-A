@@ -69,12 +69,12 @@ export class TasksEffects {
     );
 
   @Effect() deleteTask$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.DELETE_TASK)
+    .ofType<TasksActions.DeleteTask>(TasksActionTypes.DELETE_TASK)
     .pipe(
       map((action: TasksActions.DeleteTask) => action.payload),
       switchMap(payload =>
         this.taskPromiseService.deleteTask(payload)
-          .then(() => {
+          .then((/* method delete for this API returns nothing, so we will use payload */) => {
             return new TasksActions.DeleteTaskSuccess(payload);
           })
           .catch(err => new TasksActions.DeleteTaskError(err))
