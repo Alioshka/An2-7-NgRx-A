@@ -35,8 +35,7 @@ export class TaskFormComponent implements OnInit {
       if (task) {
         this.task = task;
       } else {
-        // this.task = new Task(null, '', null, null);
-        this.store.dispatch(new TasksActions.GetTasks());
+        this.task = new Task(null, '', null, null);
       }
     });
 
