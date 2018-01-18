@@ -37,6 +37,14 @@
       "action": "Deploy",
       "priority": 2,
       "estHours": 8
+    },
+    {
+      "id": 7,
+      "action": "й",
+      "priority": 1,
+      "estHours": 8,
+      "actHours": 0,
+      "done": false
     }
   ],
   "users": [

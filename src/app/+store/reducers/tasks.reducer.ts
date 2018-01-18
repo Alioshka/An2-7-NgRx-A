@@ -1,7 +1,7 @@
 import { TasksActionTypes, TasksActions } from './../actions';
 import { TasksState, initialTasksState } from './../state/tasks.state';
 
-import { Task } from './../../models/task';
+import { Task } from './../../tasks/models/task.model';
 
 export function tasksReducer(
   state = initialTasksState,
@@ -134,13 +134,15 @@ export function tasksReducer(
     case TasksActionTypes.DONE_TASK: {
       console.log('DONE_TASK action being handled!');
 
+      const id = (<Task>action.payload).id;
       const data = state.data.map(task => {
-        if (task.id === (<Task>action.payload).id) {
+        if (task.id === id) {
           return {...action.payload, done: true};
-        } else {
-          return task;
         }
+
+        return task;
       });
+
       return {
         ...state,
         data,
