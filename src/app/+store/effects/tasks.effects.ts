@@ -41,7 +41,7 @@ export class TasksEffects {
     );
 
   @Effect() updateTask$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.UPDATE_TASK)
+    .ofType<TasksActions.UpdateTask>(TasksActionTypes.UPDATE_TASK)
     .pipe(
       map((action: TasksActions.UpdateTask) => action.payload),
       switchMap(payload =>
