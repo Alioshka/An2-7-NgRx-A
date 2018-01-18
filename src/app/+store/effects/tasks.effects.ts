@@ -30,11 +30,11 @@ export class TasksEffects {
     );
 
   @Effect() getTask$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.GET_TASK)
+    .ofType<TasksActions.GetTask>(TasksActionTypes.GET_TASK)
     .pipe(
       map((action: TasksActions.GetTask) => action.payload),
       switchMap(payload =>
-        this.taskPromiseService.getTask(<number>payload)
+        this.taskPromiseService.getTask(payload)
           .then(task => new TasksActions.GetTaskSuccess(task) )
           .catch(err => new TasksActions.GetTaskError(err))
       )

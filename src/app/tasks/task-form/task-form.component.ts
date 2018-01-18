@@ -9,15 +9,16 @@ import * as TasksActions from './../../+store/actions/tasks.actions';
 
 // rxjs
 import { Subscription } from 'rxjs/Subscription';
-import { switchMap } from 'rxjs/operators';
 
 import { Task } from './../models/task.model';
 import { TaskArrayService, TaskPromiseService } from './../services';
+import { AutoUnsubscribe } from '../../core';
 
 @Component({
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
+@AutoUnsubscribe()
 export class TaskFormComponent implements OnInit {
   task: Task;
   tasksState$: Store<TasksState>;
@@ -34,35 +35,17 @@ export class TaskFormComponent implements OnInit {
   ngOnInit(): void {
     this.task = new Task(null, '', null, null);
 
-  //   this.tasksState$ = this.store.select('tasks');
-  //   this.sub = this.tasksState$.subscribe(tasksState =>
-  //     this.task = tasksState.selectedTask);
+    this.tasksState$ = this.store.select('tasks');
+    this.sub = this.tasksState$.subscribe(tasksState =>
+      this.task = tasksState.selectedTask);
 
-  //   this.route.paramMap.subscribe(params => {
-  //     const id = params.get('id');
-  //     if (id) {
-  //       this.store.dispatch(new TasksActions.GetTask(+id));
-  //     }
-  //   });
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.store.dispatch(new TasksActions.GetTask(+id));
+      }
+    });
 
-  // }
-
-  // ngOnDestroy(): void {
-  //   this.sub.unsubscribe();
-  // }
-
-    this.route.paramMap
-      .pipe(
-        switchMap((params: Params) => {
-          return params.get('id')
-          ? this.taskPromiseService.getTask(+params.get('id'))
-          : Promise.resolve(null);
-        })
-      )
-      .subscribe(
-        task => this.task = {...task},
-        err => console.log(err)
-    );
   }
 
   saveTask() {
