@@ -1,36 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { Router, Resolve } from '@angular/router';
+
+// NgRx
+import { Store } from '@ngrx/store';
+import { AppState, getSelectedUserByUrl } from './../../+store';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 
 import { User } from './../models/user.model';
-import { UserArrayService, UserObservableService } from './../services';
 
 @Injectable()
 export class UserResolveGuard implements Resolve<User> {
 
   constructor(
-    private userObservableService: UserObservableService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<User> | null {
+  resolve(): Observable<User> | null {
     console.log('UserResolve Guard is called');
-    const id = +route.paramMap.get('userID');
 
-    if (id) {
-      return this.userObservableService.getUser(id)
+    return this.store.select(getSelectedUserByUrl)
       .pipe(
-        catchError(() => {
-          this.router.navigate(['/users']);
-          return of(null);
-        })
+        switchMap(user => {
+          if (user) {
+            return of(user);
+          } else {
+            this.router.navigate(['/users']);
+            return of(null);
+          }
+        }),
+        take(1)
       );
-    } else {
-      return of(new User(null, '', ''));
-    }
+
   }
 }

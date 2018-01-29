@@ -9,13 +9,11 @@ import * as UsersActions from './../../+store/actions/users.actions';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
 
 import { User } from './../models/user.model';
 import { DialogService, CanComponentDeactivate } from './../../shared';
-import { UserObservableService } from './../services';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -25,7 +23,6 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   user: User;
 
   constructor(
-    private userObservableService: UserObservableService,
     private route: ActivatedRoute,
     private router: Router,
     private dialogService: DialogService,

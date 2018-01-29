@@ -6,6 +6,8 @@ import { UsersRoutingModule, usersRouterComponents } from './users.routing.modul
 
 import { UserComponent, UserArrayService, UserObservableService, UserResolveGuard } from '.';
 import { UsersAPIProvider } from './users.config';
+
+// ngrx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects, usersReducer } from './../+store';

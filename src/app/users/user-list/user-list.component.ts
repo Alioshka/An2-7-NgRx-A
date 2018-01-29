@@ -12,7 +12,6 @@ import * as UsersActions from './../../+store/actions/users.actions';
 import { AppState, getUsers, getUsersError, getEditedUser } from './../../+store';
 
 import { User } from './../models/user.model';
-import { UserArrayService, UserObservableService } from './../services';
 import { AutoUnsubscribe } from './../../core/decorators';
 
 @Component({
