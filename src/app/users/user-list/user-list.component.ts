@@ -21,7 +21,6 @@ import { AutoUnsubscribe } from './../../core/decorators';
 @AutoUnsubscribe('subscription')
 export class UserListComponent implements OnInit {
   users$: Store<Array<User>>;
-  errorMessage: string;
   usersError$: Store<Error | string>;
 
   private subscription: Subscription;
