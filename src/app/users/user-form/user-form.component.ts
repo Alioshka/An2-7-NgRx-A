@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 // @Ngrx
@@ -24,7 +24,6 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private dialogService: DialogService,
     private store: Store<AppState>,
     private location: Location
