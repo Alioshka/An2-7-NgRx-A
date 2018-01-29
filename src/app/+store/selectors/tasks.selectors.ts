@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { TasksState } from './../state';
 import { getRouterState } from './../selectors/router.selectors';
-import { Task } from './../../models/task';
+import { Task } from './../../tasks/models/task.model';
 
 
 export const getTasksState = createFeatureSelector<TasksState>('tasks');
@@ -16,8 +16,9 @@ export const getSelectedTaskByUrl = createSelector(
     getTasksData,
     getRouterState,
     (tasks, router): Task => {
-        if (router.state.params.id) {
-            return tasks.find(task => task.id === +router.state.params.id);
+        const taskID = router.state.params.id;
+        if (taskID) {
+            return tasks.find(task => task.id === +taskID);
         } else {
             return new Task(null, '', null, null);
         }

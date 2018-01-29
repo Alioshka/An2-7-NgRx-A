@@ -2,7 +2,7 @@ import * as fromUsers from './../actions/users.actions';
 import { UsersActionTypes } from './../actions/users.actions';
 import { initialUsersState, UsersState } from './../state/users.state';
 
-import { User } from './../../models/user';
+import { User } from './../../users/models/user.model';
 
 export function usersReducer (
     state = initialUsersState,

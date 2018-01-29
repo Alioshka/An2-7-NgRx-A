@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 
 import { UsersRoutingModule, usersRouterComponents } from './users.routing.module';
 
-import { UserComponent, UserArrayService, UserObservableService } from '.';
-import { UsersAPI, usersBaseUrl } from './users.config';
+import { UserComponent, UserArrayService, UserObservableService, UserResolveGuard } from '.';
+import { UsersAPIProvider } from './users.config';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { UsersEffects, usersReducer } from 'app/+store';
+import { UsersEffects, usersReducer } from './../+store';
 
 @NgModule({
   imports: [
@@ -25,7 +25,8 @@ import { UsersEffects, usersReducer } from 'app/+store';
   providers: [
     UserArrayService,
     UserObservableService,
-    { provide: UsersAPI, useValue: usersBaseUrl }
+    UsersAPIProvider,
+    UserResolveGuard
   ]
 })
 export class UsersModule {}

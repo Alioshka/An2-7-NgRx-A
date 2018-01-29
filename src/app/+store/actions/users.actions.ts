@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { User } from './../../models/user';
+import { User } from './../../users/models/user.model';
 
 // Actions
 // [Users] - namespace

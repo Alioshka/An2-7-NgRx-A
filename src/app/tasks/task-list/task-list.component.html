@@ -3,11 +3,12 @@
     (click)="createTask()">New Task</button>
   <br><br>
 
-  <p *ngIf="(tasksError$ | async)">{{(tasksError$ | async)}}</p>
+  <p *ngIf="(tasksError$ | async) as value">{{value}}</p>
 
-  <task *ngFor='let task of (tasks$ | async)'
+  <app-task *ngFor='let task of (tasks$ | async)'
     [task]="task"
-    (onComplete)="completeTask($event)"
-    (onDelete)="deleteTask($event)">
-  </task>
+    (complete)="completeTask($event)"
+    (edit)="editTask($event)"
+    (delete)="deleteTask($event)">
+  </app-task>
 </div>
