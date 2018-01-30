@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { User } from './../../models/user';
+import { User } from './../../users/models/user.model';
 
 // Actions
 // [Users] - namespace
@@ -98,8 +98,8 @@ export class DeleteUserError implements Action {
   constructor(public payload: Error | string) {}
 }
 
-export type UsersActions =
-  | GetUsers
+export type UsersActions 
+  = GetUsers
   | GetUsersSuccess
   | GetUsersError
   | GetUser

@@ -30,6 +30,13 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
         }
         const { params, fragment } = state;
 
+        // Only return an object including the URL, queryParams, params and fragment
+        // instead of the entire snapshot
         return { url, queryParams, params, fragment };
     }
 }
+
+export const RouterStateSerializerProvider = {
+    provide: RouterStateSerializer,
+    useClass: CustomSerializer
+};

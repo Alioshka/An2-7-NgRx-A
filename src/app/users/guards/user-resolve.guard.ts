@@ -3,24 +3,27 @@ import { Router, Resolve } from '@angular/router';
 
 // NgRx
 import { Store } from '@ngrx/store';
-import { AppState, getSelectedUserByUrl } from './../+store';
-import * as RouterActions from './../+store/actions/router.actions';
+import { AppState, getSelectedUserByUrl } from './../../+store';
+import * as RouterActions from './../../+store/actions/router.actions';
 
+// rxjs
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { first, switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 
-import { User } from './../models/user';
+import { User } from './../models/user.model';
 
 @Injectable()
 export class UserResolveGuard implements Resolve<User> {
 
   constructor(
     private router: Router,
-    private store: Store<AppState>,
+    private store: Store<AppState>
   ) {}
 
-  resolve(): Observable<User> {
+  resolve(): Observable<User> | null {
+    console.log('UserResolve Guard is called');
+
     return this.store.select(getSelectedUserByUrl)
       .pipe(
         switchMap(user => {
@@ -33,7 +36,7 @@ export class UserResolveGuard implements Resolve<User> {
             return of(null);
           }
         }),
-        first()
+        take(1)
       );
 
   }

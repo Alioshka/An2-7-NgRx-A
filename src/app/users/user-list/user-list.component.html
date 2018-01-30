@@ -1,12 +1,12 @@
 <p *ngIf="(usersError$ | async) as errorMessage">{{errorMessage}}</p>
 
-<user
-  *ngFor='let user of (users$ | async)'
+<app-user 
+  *ngFor='let user of (users$ | async)' 
   [user]="user"
   [class.edited]="isEdited(user)"
-  (onDelete)="deleteUser($event)"
-  (onEdit)="editUser($event)">
-</user>
+  (edit)="editUser($event)"
+  (delete)="deleteUser($event)">
+</app-user>
 
 
 

@@ -12,23 +12,22 @@ import { map, tap } from 'rxjs/operators';
 export class RouterEffects {
 
     @Effect({ dispatch: false }) navigate$ = this.actions$
-        .ofType(RouterActionTypes.GO)
+        .ofType<RouterActions.Go>(RouterActionTypes.GO)
         .pipe(
             map((action: RouterActions.Go) => action.payload),
             tap(({path, queryParams, extras}) => {
-                console.log('!!!');
                 this.router.navigate(path, {queryParams, ...extras});
             })
         );
 
     @Effect({ dispatch: false }) navigateBack$ = this.actions$
-        .ofType(RouterActionTypes.BACK)
+        .ofType<RouterActions.Back>(RouterActionTypes.BACK)
         .pipe(
             tap(() => this.location.back())
         );
 
     @Effect({ dispatch: false }) navigateForward$ = this.actions$
-        .ofType(RouterActionTypes.FORWARD)
+        .ofType<RouterActions.Forward>(RouterActionTypes.FORWARD)
         .pipe(
             tap(() => this.location.forward())
         );

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
@@ -7,14 +7,13 @@ import { AppState, getUsersOriginalUser } from './../../+store';
 import * as UsersActions from './../../+store/actions/users.actions';
 import * as RouterActions from './../../+store/actions/router.actions';
 
+// rxjs
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
 
-import { User } from './../../models/user';
-import { DialogService } from './../../services/dialog.service';
-import { UserObservableService } from './../services/user-observable.service';
-import { CanComponentDeactivate } from './../../guards/can-component-deactivate.interface';
+import { User } from './../models/user.model';
+import { DialogService, CanComponentDeactivate } from './../../shared';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -24,9 +23,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   user: User;
 
   constructor(
-    private userObservableService: UserObservableService,
     private route: ActivatedRoute,
-    private router: Router,
     private dialogService: DialogService,
     private store: Store<AppState>
   ) { }
@@ -38,11 +35,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   saveUser() {
-    const user = new User(
-      this.user.id,
-      this.user.firstName,
-      this.user.lastName
-    );
+    const user = {...this.user};
 
     if (user.id) {
       this.store.dispatch(new UsersActions.UpdateUser(user));
