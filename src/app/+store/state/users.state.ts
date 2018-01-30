@@ -1,4 +1,4 @@
-import { User } from './../../models/user';
+import { User } from './../../users/models/user.model';
 
 export interface UsersState {
   entities: Readonly<{ [id: number]: User }>;

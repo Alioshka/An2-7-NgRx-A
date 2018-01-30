@@ -11,13 +11,17 @@ import * as RouterActions from './../actions/router.actions';
 import { Observable } from 'rxjs/Observable';
 import { map, switchMap } from 'rxjs/operators';
 
-import { TaskPromiseService } from './../../tasks/services/task-promise.service';
+import { TaskPromiseService } from './../../tasks/services';
 
 @Injectable()
 export class TasksEffects {
 
   @Effect() getTasks$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.GET_TASKS)
+    // Instead of ofType<TasksActions.GetTasks>(...) you can use ofType(...)
+    // It's optional.
+    // Specify the action type to allow type-safe mapping to other data on the action,
+    // including payload
+    .ofType<TasksActions.GetTasks>(TasksActionTypes.GET_TASKS)
     .pipe(
       switchMap(action =>
         this.taskPromiseService.getTasks()
@@ -27,18 +31,18 @@ export class TasksEffects {
     );
 
   @Effect() getTask$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.GET_TASK)
+    .ofType<TasksActions.GetTask>(TasksActionTypes.GET_TASK)
     .pipe(
       map((action: TasksActions.GetTask) => action.payload),
       switchMap(payload =>
-        this.taskPromiseService.getTask(<number>payload)
+        this.taskPromiseService.getTask(payload)
           .then(task => new TasksActions.GetTaskSuccess(task) )
           .catch(err => new TasksActions.GetTaskError(err))
       )
     );
 
   @Effect() updateTask$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.UPDATE_TASK)
+    .ofType<TasksActions.UpdateTask>(TasksActionTypes.UPDATE_TASK)
     .pipe(
       map((action: TasksActions.UpdateTask) => action.payload),
       switchMap(payload =>
@@ -49,7 +53,7 @@ export class TasksEffects {
     );
 
   @Effect() createTask$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.CREATE_TASK)
+    .ofType<TasksActions.CreateTask>(TasksActionTypes.CREATE_TASK)
     .pipe(
       map((action: TasksActions.CreateTask) => action.payload),
       switchMap(payload =>
@@ -60,7 +64,7 @@ export class TasksEffects {
     );
 
   @Effect() createUpdateTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(
+    .ofType<TasksActions.CreateTask | TasksActions.UpdateTask>(
       TasksActionTypes.CREATE_TASK_SUCCESS,
       TasksActionTypes.UPDATE_TASK_SUCCESS
     )
@@ -71,12 +75,12 @@ export class TasksEffects {
     );
 
   @Effect() deleteTask$: Observable<Action> = this.actions$
-    .ofType(TasksActionTypes.DELETE_TASK)
+    .ofType<TasksActions.DeleteTask>(TasksActionTypes.DELETE_TASK)
     .pipe(
       map((action: TasksActions.DeleteTask) => action.payload),
       switchMap(payload =>
         this.taskPromiseService.deleteTask(payload)
-          .then(() => {
+          .then((/* method delete for this API returns nothing, so we will use payload */) => {
             return new TasksActions.DeleteTaskSuccess(payload);
           })
           .catch(err => new TasksActions.DeleteTaskError(err))

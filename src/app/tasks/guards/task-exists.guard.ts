@@ -9,7 +9,7 @@ import * as RouterActions from './../../+store/actions/router.actions';
 import { Observable } from 'rxjs/observable';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 
-import { Task } from './../../models/task';
+import { Task } from './../models/task.model';
 
 @Injectable()
 export class TaskExistGuard implements CanActivate {

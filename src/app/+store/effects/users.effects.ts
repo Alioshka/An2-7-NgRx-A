@@ -13,13 +13,13 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { switchMap, map, catchError } from 'rxjs/operators';
 
-import { UserObservableService } from './../../users/services/user-observable.service';
+import { UserObservableService } from './../../users/services';
 
 @Injectable()
 export class UsersEffects {
 
   @Effect() getUsers$: Observable<Action> = this.actions$
-    .ofType(UsersActionTypes.GET_USERS)
+    .ofType<UsersActions.GetUsers>(UsersActionTypes.GET_USERS)
     .pipe(
       switchMap(action =>
         this.userObservableService.getUsers()
@@ -31,7 +31,7 @@ export class UsersEffects {
     );
 
   @Effect() getUser$: Observable<Action> = this.actions$
-    .ofType(UsersActionTypes.GET_USER)
+    .ofType<UsersActions.GetUser>(UsersActionTypes.GET_USER)
     .pipe(
       map((action: UsersActions.GetUser) => action.payload),
       switchMap(payload =>
@@ -44,7 +44,7 @@ export class UsersEffects {
     );
 
   @Effect() updateUser$: Observable<Action> = this.actions$
-    .ofType(UsersActionTypes.UPDATE_USER)
+    .ofType<UsersActions.UpdateUser>(UsersActionTypes.UPDATE_USER)
     .pipe(
       map((action: UsersActions.UpdateUser) => action.payload),
       switchMap(payload =>
@@ -57,7 +57,7 @@ export class UsersEffects {
     );
 
   @Effect() createUser$: Observable<Action> = this.actions$
-    .ofType(UsersActionTypes.CREATE_USER)
+    .ofType<UsersActions.CreateUser>(UsersActionTypes.CREATE_USER)
     .pipe(
       map((action: UsersActions.CreateUser) => action.payload),
       switchMap(payload =>
@@ -70,7 +70,7 @@ export class UsersEffects {
     );
 
   @Effect() createUpdateUserSuccess$: Observable<Action> = this.actions$
-    .ofType(
+    .ofType<UsersActions.CreateUser | UsersActions.UpdateUser>(
       UsersActionTypes.CREATE_USER_SUCCESS,
       UsersActionTypes.UPDATE_USER_SUCCESS
     )
@@ -78,20 +78,21 @@ export class UsersEffects {
       map(action => (<any>action).payload),
       map(user => {
         const path = user.id
-          ? ['/users', { id: user.id }]
+          ? ['/users', { editedUserId: user.id }]
           : ['/users'];
         return new RouterActions.Go({ path });
       })
     );
 
   @Effect() deleteUser$: Observable<Action> = this.actions$
-    .ofType(UsersActionTypes.DELETE_USER)
+    .ofType<UsersActions.DeleteUser>(UsersActionTypes.DELETE_USER)
     .pipe(
       map((action: UsersActions.DeleteUser) => action.payload),
       switchMap(payload =>
         this.userObservableService.deleteUser(payload)
         .pipe(
             // Note: json-server doesn't return deleted user
+            // so we use payload
             map(() => new UsersActions.DeleteUserSuccess(payload)),
             catchError(err => of(new UsersActions.DeleteUserError(err)))
         )

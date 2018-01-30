@@ -1,6 +1,6 @@
 import { createEntityAdapter, EntityState, EntityAdapter } from '@ngrx/entity';
 
-import { Task } from './../../models/task';
+import { Task } from './../../tasks/models/task.model';
 
 export interface TasksState extends EntityState<Task> {
   selectedTask: Readonly<Task>;

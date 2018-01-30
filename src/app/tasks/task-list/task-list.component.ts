@@ -6,7 +6,7 @@ import * as TasksActions from './../../+store/actions/tasks.actions';
 import * as RouterActions from './../../+store/actions/router.actions';
 import { AppState, getTasksData, getTasksError } from './../../+store';
 
-import { Task } from './../../models/task';
+import { Task } from './../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',

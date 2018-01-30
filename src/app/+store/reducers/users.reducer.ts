@@ -2,7 +2,7 @@ import * as fromUsers from './../actions/users.actions';
 import { UsersActionTypes } from './../actions/users.actions';
 import { initialUsersState, UsersState } from './../state/users.state';
 
-import { User } from './../../models/user';
+import { User } from './../../users/models/user.model';
 
 export function usersReducer (
     state = initialUsersState,
@@ -24,8 +24,6 @@ export function usersReducer (
         const users = <User[]>action.payload;
         console.log(users);
 
-        // transform array to object
-        // TODO: move it to utility functions
         const entities = users.reduce(
             (result: {[id: number]: User}, user: User) => {
                 return {
@@ -47,7 +45,6 @@ export function usersReducer (
       }
 
       case UsersActionTypes.GET_USER_SUCCESS: {
-        // const selectedTask = { ...<Task>action.payload };
         return {
           ...state,
           loading: false,

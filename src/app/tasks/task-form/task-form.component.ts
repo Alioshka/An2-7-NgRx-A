@@ -6,15 +6,18 @@ import { AppState, getSelectedTaskByUrl } from './../../+store';
 import * as TasksActions from './../../+store/actions/tasks.actions';
 import * as RouterActions from './../../+store/actions/router.actions';
 
+// rxjs
 import { Subscription } from 'rxjs/Subscription';
 
-import { Task } from './../../models/task';
+import { Task } from './../models/task.model';
+import { AutoUnsubscribe } from '../../core';
 
 @Component({
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
-export class TaskFormComponent implements OnInit, OnDestroy {
+@AutoUnsubscribe()
+export class TaskFormComponent implements OnInit {
   task: Task;
 
   private sub: Subscription;
@@ -28,17 +31,8 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       .subscribe(task => this.task = task);
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
-
   saveTask() {
-    const task = new Task(
-      this.task.id,
-      this.task.action,
-      this.task.priority,
-      this.task.estHours
-    );
+    const task = {...this.task};
 
     if (task.id) {
       this.store.dispatch(new TasksActions.UpdateTask(task));
