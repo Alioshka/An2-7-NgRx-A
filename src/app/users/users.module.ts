@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { UsersRoutingModule, usersRouterComponents } from './users.routing.module';
 
-import { UserComponent, UserArrayService, UserObservableService, UserResolveGuard } from '.';
+import { UserComponent, UserArrayService, UserObservableService } from '.';
 import { UsersAPIProvider } from './users.config';
 
 // ngrx
@@ -27,8 +27,7 @@ import { UsersEffects, usersReducer } from './../+store';
   providers: [
     UserArrayService,
     UserObservableService,
-    UsersAPIProvider,
-    UserResolveGuard
+    UsersAPIProvider
   ]
 })
 export class UsersModule {}

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UsersComponent, UserListComponent, UserFormComponent, UserResolveGuard } from '.';
+import { UsersComponent, UserListComponent, UserFormComponent } from '.';
 
 import { CanDeactivateGuard } from './../shared/guards/can-deactivate.guard';
 import { UsersStateLoadingGuard } from './guards/users-state-loading.guard';

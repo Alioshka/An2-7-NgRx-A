@@ -16,7 +16,7 @@ import { User } from './../models/user.model';
 import { DialogService, CanComponentDeactivate } from './../../shared';
 import { AutoUnsubscribe } from '../../core';
 
-@AutoUnsubscribe('sub')
+@AutoUnsubscribe()
 @Component({
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css'],
