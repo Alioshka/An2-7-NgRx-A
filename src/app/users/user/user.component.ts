@@ -1,23 +1,24 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { User } from './../../models/user';
+import { User } from './../models/user.model';
 
 @Component({
-  selector: 'user',
+  selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
 export class UserComponent {
   @Input() user: User;
-  @Output() onDelete = new EventEmitter<User>();
-  @Output() onEdit = new EventEmitter<User>();
+
+  @Output() delete = new EventEmitter<User>();
+  @Output() edit = new EventEmitter<User>();
 
   editUser() {
-    this.onEdit.emit(this.user);
+    this.edit.emit(this.user);
   }
 
   deleteUser() {
-    this.onDelete.emit(this.user);
+    this.delete.emit(this.user);
   }
 
 }

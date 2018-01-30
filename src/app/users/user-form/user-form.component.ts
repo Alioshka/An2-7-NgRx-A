@@ -6,17 +6,17 @@ import { AppState, getUsersOriginalUser, getSelectedUserByUrl } from './../../+s
 import * as UsersActions from './../../+store/actions/users.actions';
 import * as RouterActions from './../../+store/actions/router.actions';
 
+// rxjs
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
 
-import { User } from './../../models/user';
-import { DialogService } from './../../services/dialog.service';
-import { CanComponentDeactivate } from './../../guards/can-component-deactivate.interface';
-import { AutoUnsubscribe } from './../../decorators';
+import { User } from './../models/user.model';
+import { DialogService, CanComponentDeactivate } from './../../shared';
+import { AutoUnsubscribe } from '../../core';
 
-@AutoUnsubscribe('sub', false)
+@AutoUnsubscribe('sub')
 @Component({
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css'],
@@ -37,11 +37,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   saveUser() {
-    const user = new User(
-      this.user.id,
-      this.user.firstName,
-      this.user.lastName
-    );
+    const user = {...this.user};
 
     if (user.id) {
       this.store.dispatch(new UsersActions.UpdateUser(user));
