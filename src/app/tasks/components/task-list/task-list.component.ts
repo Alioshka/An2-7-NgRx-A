@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // @Ngrx
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState, TasksState } from './../../../core/+store';
+
+// Rxjs
+import { Observable } from 'rxjs/Observable';
 
 import { Task } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
@@ -14,7 +17,7 @@ import { TaskPromiseService } from './../../services';
 })
 export class TaskListComponent implements OnInit {
   tasks: Array<Task>;
-  tasksState$: Store<TasksState>;
+  tasksState$: Observable<TasksState>;
 
   constructor(
     private router: Router,
@@ -24,7 +27,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-    this.tasksState$ = this.store.select('tasks');
+    this.tasksState$ = this.store.pipe(select('tasks'));
   }
 
   onCreateTask() {
@@ -46,10 +49,6 @@ export class TaskListComponent implements OnInit {
       .deleteTask(task)
       .then(() => (this.tasks = this.tasks.filter(t => t.id !== task.id)))
       .catch(err => console.log(err));
-  }
-
-  private async getTasks() {
-    this.tasks = await this.taskPromiseService.getTasks();
   }
 
   private async updateTask(task: Task) {
