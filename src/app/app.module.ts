@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { MyInterceptor } from './core/interceptors/my.interceptor';
+import { CoreStoreModule } from './core/+store/core-store.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +30,8 @@ import { MyInterceptor } from './core/interceptors/my.interceptor';
     SharedModule,
     TasksModule,
     StoreModule.forRoot({}),
-    AppRoutingModule
+    AppRoutingModule,
+    CoreStoreModule
   ],
   providers: [
     // add this line if you don't have access to
