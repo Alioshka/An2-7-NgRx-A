@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
-import { tasksReducer } from './../+store/reducers';
+import { tasksReducer } from './../core/+store';
 
-import { TasksRoutingModule } from './tasks.routing.module';
+import { TasksRoutingModule } from './tasks-routing.module';
 
 import {
   TaskListComponent,
