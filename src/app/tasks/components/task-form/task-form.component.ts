@@ -3,11 +3,12 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 // @Ngrx
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState, TasksState } from './../../../core/+store';
 import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 
 // rxjs
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Task } from './../../models/task.model';
@@ -21,7 +22,7 @@ import { AutoUnsubscribe } from '../../../core';
 @AutoUnsubscribe()
 export class TaskFormComponent implements OnInit {
   task: Task;
-  tasksState$: Store<TasksState>;
+  tasksState$: Observable<TasksState>;
 
   private sub: Subscription;
 
@@ -35,12 +36,12 @@ export class TaskFormComponent implements OnInit {
   ngOnInit(): void {
     this.task = new Task(null, '', null, null);
 
-    this.tasksState$ = this.store.select('tasks');
+    this.tasksState$ = this.store.pipe(select('tasks'));
     this.sub = this.tasksState$.subscribe(tasksState =>
       this.task = tasksState.selectedTask);
 
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
+      const id = params.get('taskID');
       if (id) {
         this.store.dispatch(new TasksActions.GetTask(+id));
       }
