@@ -1,7 +1,7 @@
 import { TasksActionTypes, TasksActions } from './tasks.actions';
 import { TasksState, initialTasksState } from './tasks.state';
 
-import { Task } from './../../tasks/models/task.model';
+import { Task } from './../../../tasks/models/task.model';
 
 export function tasksReducer(
   state = initialTasksState,
