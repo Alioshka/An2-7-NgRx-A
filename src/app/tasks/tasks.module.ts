@@ -15,6 +15,8 @@ import {
   TaskArrayService,
   TaskPromiseService
 } from '.';
+import { EffectsModule } from '@ngrx/effects';
+import { TasksEffects } from '../core/+store/tasks/tasks.effects';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import {
     CommonModule,
     FormsModule,
     TasksRoutingModule,
-    StoreModule.forFeature('tasks', tasksReducer)
+    StoreModule.forFeature('tasks', tasksReducer),
+    EffectsModule.forFeature([TasksEffects])
   ],
   providers: [
     TaskArrayService,
