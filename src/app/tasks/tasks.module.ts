@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { tasksReducer } from './../+store/reducers';
-import { TasksEffects } from '../+store/effects';
+import { tasksReducer } from './../core/+store';
+import { TasksEffects } from '../core/+store/tasks/tasks.effects';
 
-import { TasksRoutingModule } from './tasks.routing.module';
+import { TasksRoutingModule } from './tasks-routing.module';
 
 import {
   TaskListComponent,
