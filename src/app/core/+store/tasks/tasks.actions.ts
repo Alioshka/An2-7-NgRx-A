@@ -5,6 +5,8 @@ import { Task } from './../../../tasks/models/task.model';
 // [Tasks]- namespace
 export enum TasksActionTypes {
   GET_TASKS = '[Tasks] GET_TASKS',
+  GET_TASKS_SUCCESS = '[Tasks] GET_TASKS_SUCCESS',
+  GET_TASKS_ERROR   = '[Tasks] GET_TASKS_ERROR',
   GET_TASK = '[Tasks] GET_TASK',
   CREATE_TASK = '[Tasks] CREATE_TASK',
   UPDATE_TASK = '[Tasks] UPDATE_TASK',

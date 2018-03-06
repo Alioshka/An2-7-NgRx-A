@@ -20,7 +20,7 @@ export function tasksReducer(
 
     case TasksActionTypes.GET_TASKS_SUCCESS: {
       console.log('GET_TASKS_SUCCESS action being handled!');
-      const data = [...<Array<Task>>action.payload];
+      const data = [...(<Array<Task>>action.payload)];
       return {
         ...state,
         data,
@@ -61,7 +61,7 @@ export function tasksReducer(
       const id = (<Task>action.payload).id;
       const data = state.data.map(task => {
         if (task.id === id) {
-          return {...action.payload, done: true};
+          return { ...action.payload, done: true };
         }
 
         return task;
@@ -69,8 +69,7 @@ export function tasksReducer(
 
       return {
         ...state,
-        data,
-        error: null
+        data
       };
     }
 
