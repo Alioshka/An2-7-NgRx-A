@@ -35,11 +35,9 @@ export class TaskListComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  completeTask(task: Task): void {
+  onCompleteTask(task: Task): void {
     const doneTask = {...task, done: true};
     this.store.dispatch(new TasksActions.UpdateTask(doneTask));
-  // onCompleteTask(task: Task): void {
-    // this.store.dispatch(new TasksActions.DoneTask(task));
   }
 
   onEditTask(task: Task): void {

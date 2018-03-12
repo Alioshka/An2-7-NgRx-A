@@ -126,12 +126,12 @@ export function tasksReducer(
 
     case TasksActionTypes.DELETE_TASK: {
       console.log('DELETE_TASK action being handled!');
-      return {...state };
+      return { ...state };
     }
 
     case TasksActionTypes.DELETE_TASK_SUCCESS: {
       console.log('DELETE_TASK_SUCCESS action being handled!');
-      const task = { ...<Task>action.payload };
+      const task = { ...(<Task>action.payload) };
       const data = state.data.filter(t => t.id !== task.id);
 
       return {
@@ -143,30 +143,12 @@ export function tasksReducer(
     case TasksActionTypes.DELETE_TASK_ERROR: {
       console.log('DELETE_TASK_ERROR action being handled!');
       const error = action.payload;
+
       return {
         ...state,
         error
       };
-      // return { ...state };
     }
-
-   // case TasksActionTypes.DONE_TASK: {
-   //   console.log('DONE_TASK action being handled!');
-
-      // const id = (<Task>action.payload).id;
-      // const data = state.data.map(task => {
-        // if (task.id === id) {
-          // return { ...action.payload, done: true };
-        // }
-
-        // return task;
-      // });
-
-      // return {
-        // ...state,
-        // data
-      // };
-    // }
 
     default: {
       console.log('UNKNOWN_TASK action being handled!');
