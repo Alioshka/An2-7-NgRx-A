@@ -79,9 +79,7 @@ export function tasksReducer(
     case TasksActionTypes.CREATE_TASK_SUCCESS: {
       console.log('CREATE_TASK_SUCCESS action being handled!');
       const task = { ...<Task>action.payload };
-      const data = [...state.data];
-
-      data.push(task);
+      const data = [...state.data, task];
 
       return {
         ...state,

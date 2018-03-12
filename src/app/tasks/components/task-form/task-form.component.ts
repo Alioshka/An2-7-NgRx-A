@@ -40,11 +40,6 @@ export class TaskFormComponent implements OnInit {
         this.task = new Task(null, '', null, null);
       }
     });
-    // this.task = new Task(null, '', null, null);
-
-    // this.tasksState$ = this.store.pipe(select('tasks'));
-    // this.sub = this.tasksState$.subscribe(tasksState =>
-      // this.task = tasksState.selectedTask);
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('taskID');
