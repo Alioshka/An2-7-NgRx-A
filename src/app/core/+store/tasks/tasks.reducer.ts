@@ -132,10 +132,7 @@ export function tasksReducer(
     case TasksActionTypes.DELETE_TASK_SUCCESS: {
       console.log('DELETE_TASK_SUCCESS action being handled!');
       const task = { ...<Task>action.payload };
-      const data = [...state.data];
-      const index = data.findIndex(t => t.id === task.id);
-
-      data.splice(index, 1);
+      const data = state.data.filter(t => t.id !== task.id);
 
       return {
         ...state,
