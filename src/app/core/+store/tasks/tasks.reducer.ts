@@ -10,7 +10,6 @@ export function tasksReducer(
   console.log(`Reducer: Action came in! ${action.type}`);
 
   switch (action.type) {
-
     case TasksActionTypes.GET_TASKS: {
       console.log('GET_TASKS action being handled!');
       return {
@@ -26,7 +25,8 @@ export function tasksReducer(
         ...state,
         data,
         loading: false,
-        loaded: true
+        loaded: true,
+        selectedTask: null
       };
     }
 
@@ -51,7 +51,7 @@ export function tasksReducer(
 
     case TasksActionTypes.GET_TASK_SUCCESS: {
       console.log('GET_TASK_SUCCESS action being handled!');
-      const selectedTask = { ...<Task>action.payload };
+      const selectedTask = { ...(<Task>action.payload) };
       return {
         ...state,
         loading: false,
@@ -78,7 +78,7 @@ export function tasksReducer(
 
     case TasksActionTypes.CREATE_TASK_SUCCESS: {
       console.log('CREATE_TASK_SUCCESS action being handled!');
-      const task = { ...<Task>action.payload };
+      const task = { ...(<Task>action.payload) };
       const data = [...state.data, task];
 
       return {
@@ -103,7 +103,7 @@ export function tasksReducer(
 
     case TasksActionTypes.UPDATE_TASK_SUCCESS: {
       console.log('UPDATE_TASK_SUCCESS action being handled!');
-      const task = { ...<Task>action.payload };
+      const task = { ...(<Task>action.payload) };
       const data = [...state.data];
       const index = data.findIndex(t => t.id === task.id);
 
