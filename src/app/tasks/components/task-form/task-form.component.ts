@@ -32,7 +32,7 @@ export class TaskFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.tasksState$ = this.store.select('tasks');
+    this.tasksState$ = this.store.pipe(select('tasks'));
     this.sub = this.tasksState$.subscribe(tasksState => {
       if (tasksState.selectedTask) {
         this.task = tasksState.selectedTask;
