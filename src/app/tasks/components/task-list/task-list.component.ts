@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // @Ngrx
-import { Store } from '@ngrx/store';
-import * as TasksActions from './../../+store/actions/tasks.actions';
-import { AppState, TasksState, getTasksState } from './../../+store';
-// import { Store, select } from '@ngrx/store';
-// import { AppState, TasksState } from './../../../core/+store';
-// import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
+import { Store, select } from '@ngrx/store';
+import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
+import { AppState, TasksState, getTasksState } from './../../../core/+store';
 
 // Rxjs
 import { Observable } from 'rxjs/Observable';
@@ -28,8 +25,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-    this.tasksState$ = this.store.select(getTasksState);
-    // this.tasksState$ = this.store.pipe(select('tasks'));
+    this.tasksState$ = this.store.pipe(select(getTasksState));
 
     this.store.dispatch(new TasksActions.GetTasks());
   }

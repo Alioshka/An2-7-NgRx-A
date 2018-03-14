@@ -3,12 +3,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 // @Ngrx
-import { Store } from '@ngrx/store';
-import { AppState, TasksState, getTasksState } from './../../+store';
-import * as TasksActions from './../../+store/actions/tasks.actions';
-// import { Store, select } from '@ngrx/store';
-// import { AppState, TasksState } from './../../../core/+store';
-// import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
+import { Store, select } from '@ngrx/store';
+import { AppState, TasksState, getTasksState } from './../../../core/+store';
+import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +32,7 @@ export class TaskFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.tasksState$ = this.store.select(getTasksState);
+    this.tasksState$ = this.store.pipe(select(getTasksState));
     this.sub = this.tasksState$.subscribe(tasksState => {
       if (tasksState.selectedTask) {
         this.task = tasksState.selectedTask;
