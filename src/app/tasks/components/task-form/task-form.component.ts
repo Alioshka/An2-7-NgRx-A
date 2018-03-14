@@ -3,12 +3,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 // @Ngrx
-import { Store } from '@ngrx/store';
-import { AppState, getSelectedTask } from './../../+store';
-import * as TasksActions from './../../+store/actions/tasks.actions';
-// import { Store, select } from '@ngrx/store';
-// import { AppState, TasksState, getTasksState } from './../../../core/+store';
-// import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
+import { Store, select } from '@ngrx/store';
+import { AppState, getSelectedTask } from './../../../core/+store';
+import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
@@ -24,7 +21,6 @@ import { AutoUnsubscribe } from '../../../core';
 @AutoUnsubscribe()
 export class TaskFormComponent implements OnInit {
   task: Task;
-  // tasksState$: Observable<TasksState>;
 
   private sub: Subscription;
 
@@ -32,17 +28,12 @@ export class TaskFormComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private store: Store<AppState>
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.sub = this.store.select(getSelectedTask)
-    .subscribe(task => {
+    this.sub = this.store.pipe(select(getSelectedTask)).subscribe(task => {
       if (task) {
         this.task = task;
-    // this.tasksState$ = this.store.pipe(select(getTasksState));
-    // this.sub = this.tasksState$.subscribe(tasksState => {
-      // if (tasksState.selectedTask) {
-      //   this.task = tasksState.selectedTask;
       } else {
         this.task = new Task(null, '', null, null);
       }
