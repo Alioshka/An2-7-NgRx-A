@@ -3,12 +3,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 // @Ngrx
-import { Store } from '@ngrx/store';
-import { AppState, getSelectedTaskByUrl } from './../../+store';
-import * as TasksActions from './../../+store/actions/tasks.actions';
-// import { Store, select } from '@ngrx/store';
-// import { AppState, getSelectedTask } from './../../../core/+store';
-// import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
+import { Store, select } from '@ngrx/store';
+import { AppState, getSelectedTaskByUrl } from './../../../core/+store';
+import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
@@ -34,15 +31,9 @@ export class TaskFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sub = this.store.select(getSelectedTaskByUrl)
-      .subscribe(task => this.task = task);
-    // this.sub = this.store.pipe(select(getSelectedTask)).subscribe(task => {
-    //  if (task) {
-    //    this.task = task;
-    //  } else {
-    //    this.task = new Task(null, '', null, null);
-    //  }
-    // });
+    this.sub = this.store
+      .pipe(select(getSelectedTaskByUrl))
+      .subscribe(task => (this.task = task));
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('taskID');
