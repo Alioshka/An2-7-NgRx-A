@@ -4,6 +4,7 @@ import { Router, Resolve } from '@angular/router';
 // NgRx
 import { Store, select } from '@ngrx/store';
 import { AppState, getSelectedUserByUrl } from './../../core/+store';
+import * as UsersActions from './../../core/+store/users/users.actions';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
@@ -27,6 +28,7 @@ export class UserResolveGuard implements Resolve<User> {
 
     return this.store.pipe(
       select(getSelectedUserByUrl),
+      tap(user => this.store.dispatch(new UsersActions.SetOriginalUser(user))),
       delay(2000),
       switchMap(user => {
         if (user) {

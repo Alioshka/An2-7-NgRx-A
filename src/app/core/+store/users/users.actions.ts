@@ -5,21 +5,22 @@ import { User } from './../../../users/models/user.model';
 // Actions
 // [Users] - namespace
 export enum UsersActionTypes {
-  GET_USERS           = '[Users] GET_USERS',
-  GET_USERS_SUCCESS   = '[Users] GET_USERS_SUCCESS',
-  GET_USERS_ERROR     = '[Users] GET_USERS_ERROR',
-  GET_USER            = '[Users] GET_USER',
-  GET_USER_SUCCESS    = '[Users] GET_USER_SUCCESS',
-  GET_USER_ERROR      = '[Users] GET_USER_ERROR',
-  CREATE_USER         = '[Users] CREATE_USER',
+  GET_USERS = '[Users] GET_USERS',
+  GET_USERS_SUCCESS = '[Users] GET_USERS_SUCCESS',
+  GET_USERS_ERROR = '[Users] GET_USERS_ERROR',
+  GET_USER = '[Users] GET_USER',
+  GET_USER_SUCCESS = '[Users] GET_USER_SUCCESS',
+  GET_USER_ERROR = '[Users] GET_USER_ERROR',
+  CREATE_USER = '[Users] CREATE_USER',
   CREATE_USER_SUCCESS = '[Users] CREATE_USER_SUCCESS',
-  CREATE_USER_ERROR   = '[Users] CREATE_USER_ERROR',
-  UPDATE_USER         = '[Users] UPDATE_USER',
+  CREATE_USER_ERROR = '[Users] CREATE_USER_ERROR',
+  UPDATE_USER = '[Users] UPDATE_USER',
   UPDATE_USER_SUCCESS = '[Users] UPDATE_USER_SUCCESS',
-  UPDATE_USER_ERROR   = '[Users] UPDATE_USER_ERROR',
-  DELETE_USER         = '[Users] DELETE_USER',
+  UPDATE_USER_ERROR = '[Users] UPDATE_USER_ERROR',
+  DELETE_USER = '[Users] DELETE_USER',
   DELETE_USER_SUCCESS = '[Users] DELETE_USER_SUCCESS',
-  DELETE_USER_ERROR   = '[Users] DELETE_USER_ERROR',
+  DELETE_USER_ERROR = '[Users] DELETE_USER_ERROR',
+  SET_ORIGINAL_USER = '[Users] SET_ORIGINAL_USER'
 }
 
 // Action Creators
@@ -59,7 +60,7 @@ export class CreateUser implements Action {
 
 export class CreateUserSuccess implements Action {
   readonly type = UsersActionTypes.CREATE_USER_SUCCESS;
-  constructor(public payload: User) { }
+  constructor(public payload: User) {}
 }
 
 export class CreateUserError implements Action {
@@ -97,8 +98,13 @@ export class DeleteUserError implements Action {
   constructor(public payload: Error | string) {}
 }
 
-export type UsersActions
-  = GetUsers
+export class SetOriginalUser implements Action {
+  readonly type = UsersActionTypes.SET_ORIGINAL_USER;
+  constructor(public payload: User) {}
+}
+
+export type UsersActions =
+  | GetUsers
   | GetUsersSuccess
   | GetUsersError
   | GetUser
@@ -112,4 +118,5 @@ export type UsersActions
   | UpdateUserError
   | DeleteUser
   | DeleteUserSuccess
-  | DeleteUserError;
+  | DeleteUserError
+  | SetOriginalUser;
