@@ -25,8 +25,7 @@ export function tasksReducer(
         ...state,
         data,
         loading: false,
-        loaded: true,
-        selectedTask: null
+        loaded: true
       };
     }
 
@@ -55,8 +54,7 @@ export function tasksReducer(
       return {
         ...state,
         loading: false,
-        loaded: true,
-        selectedTask
+        loaded: true
       };
     }
 
