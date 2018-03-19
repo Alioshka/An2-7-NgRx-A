@@ -11,7 +11,7 @@ import * as RouterActions from './+store/actions/router.actions';
 import { Subscription } from 'rxjs/Subscription';
 import { filter, map, switchMap } from 'rxjs/operators';
 
-import { MessagesService } from './core/services';
+import { MessagesService, SpinnerService } from './core';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private metaService: Meta,
     private router: Router,
     private store: Store<AppState>
+    // public spinnerService: SpinnerService
   ) { }
 
   ngOnInit() {

@@ -5,9 +5,9 @@ import {
 } from '@angular/router';
 
 // @Ngrx
-import { Store } from '@ngrx/store';
-import { AppState} from './../../+store';
-import * as RouterActions from './../../+store/actions/router.actions';
+//import { Store } from '@ngrx/store';
+//import { AppState} from './../../+store';
+//import * as RouterActions from './../../+store/actions/router.actions';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -21,15 +21,19 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     private store: Store<AppState>
   ) { }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-  : Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
     console.log('CanActivate Guard is called');
     const { url } = state;
     return this.checkLogin(url);
   }
 
-  canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-  : Observable<boolean> | Promise<boolean> | boolean {
+  canActivateChild(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
     console.log('CanActivateChild Guard is called');
     const { url } = state;
     return this.checkLogin(url);
@@ -44,7 +48,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn) { return true; }
+    if (this.authService.isLoggedIn) {
+      return true;
+    }
 
     // Store the attempted URL for redirecting
     this.authService.redirectUrl = url;
@@ -55,7 +61,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     // Set our navigation extras object
     // that contains our global query params and fragment
     const navigationExtras: NavigationExtras = {
-      queryParams: { 'session_id': sessionId },
+      queryParams: { sessionId },
       fragment: 'anchor'
     };
 
