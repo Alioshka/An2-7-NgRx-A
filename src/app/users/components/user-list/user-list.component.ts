@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 // ngrx
 import { Store, select } from '@ngrx/store';
 import * as UsersActions from './../../../core/+store/users/users.actions';
-// import * as RouterActions from './../../+store/actions/router.actions';
+import * as RouterActions from './../../../core/+store/router/router.actions';
 import {
   AppState,
   getUsers,
@@ -34,8 +34,7 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<AppState>,
-    private router: Router
+    private store: Store<AppState>
   ) {}
 
   ngOnInit() {
@@ -69,9 +68,10 @@ export class UserListComponent implements OnInit {
   onEditUser(user: User) {
     const link = ['/users/edit', user.id];
 
-    this.store.dispatch(new RouterActions.Go({
-      path: link
-    }));
-    //this.router.navigate(link);
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: link
+      })
+    );
   }
 }

@@ -5,9 +5,9 @@ import {
 } from '@angular/router';
 
 // @Ngrx
-//import { Store } from '@ngrx/store';
-//import { AppState} from './../../+store';
-//import * as RouterActions from './../../+store/actions/router.actions';
+import { Store, select } from '@ngrx/store';
+import { AppState } from './../+store';
+import * as RouterActions from './../+store/router/router.actions';
 
 import { Observable } from 'rxjs/Observable';
 

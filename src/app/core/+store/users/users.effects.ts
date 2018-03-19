@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as UsersActions from './users.actions';
+import * as RouterActions from './../router/router.actions';
 
 // Rxjs
 import { Observable } from 'rxjs/Observable';
@@ -55,14 +56,13 @@ export class UsersEffects {
   updateUser$: Observable<Action> = this.actions$.pipe(
     ofType<UsersActions.UpdateUser>(UsersActions.UsersActionTypes.UPDATE_USER),
     pluck('payload'),
-    concatMap((payload: User ) =>
-      this.userObservableService.updateUser(payload).pipe(
-        map(user => {
-          this.router.navigate(['/users', { editedUserID: user.id }]);
-          return new UsersActions.UpdateUserSuccess(user);
-        }),
-        catchError(err => of(new UsersActions.UpdateUserError(err)))
-      )
+    concatMap((payload: User) =>
+      this.userObservableService
+        .updateUser(payload)
+        .pipe(
+          map(user => new UsersActions.UpdateUserSuccess(user)),
+          catchError(err => of(new UsersActions.UpdateUserError(err)))
+        )
     )
   );
 
@@ -71,13 +71,12 @@ export class UsersEffects {
     ofType<UsersActions.CreateUser>(UsersActions.UsersActionTypes.CREATE_USER),
     pluck('payload'),
     concatMap((payload: User) =>
-      this.userObservableService.createUser(payload).pipe(
-        map(user => {
-          this.router.navigate(['/users']);
-          return new UsersActions.CreateUserSuccess(user);
-        }),
-        catchError(err => of(new UsersActions.CreateUserError(err)))
-      )
+      this.userObservableService
+        .createUser(payload)
+        .pipe(
+          map(user => new UsersActions.CreateUserSuccess(user)),
+          catchError(err => of(new UsersActions.CreateUserError(err)))
+        )
     )
   );
 
@@ -93,5 +92,18 @@ export class UsersEffects {
         catchError(err => of(new UsersActions.DeleteUserError(err)))
       )
     )
+  );
+
+  @Effect()
+  createUpdateUserSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType<UsersActions.CreateUser | UsersActions.UpdateUser>(
+      UsersActions.UsersActionTypes.CREATE_USER_SUCCESS,
+      UsersActions.UsersActionTypes.UPDATE_USER_SUCCESS
+    ),
+    pluck('payload'),
+    map((user: User) => {
+      const path = user.id ? ['/users', { editedUserId: user.id }] : ['/users'];
+      return new RouterActions.Go({ path });
+    })
   );
 }

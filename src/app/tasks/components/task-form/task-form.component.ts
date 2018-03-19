@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { AppState, getSelectedTaskByUrl } from './../../../core/+store';
 import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
-// import * as RouterActions from './../../+store/actions/router.actions';
+import * as RouterActions from './../../../core/+store/router/router.actions';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';

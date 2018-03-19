@@ -5,10 +5,11 @@ import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as TasksActions from './tasks.actions';
+import * as RouterActions from './../router/router.actions';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
-import { pluck, concatMap, switchMap } from 'rxjs/operators';
+import { pluck, concatMap, switchMap, tap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
 import { Task } from '../../../tasks/models/task.model';
@@ -57,10 +58,7 @@ export class TasksEffects {
     concatMap((payload: Task) =>
       this.taskPromiseService
         .updateTask(payload)
-        .then(task => {
-          this.router.navigate(['/home']);
-          return new TasksActions.UpdateTaskSuccess(task);
-        })
+        .then(task => new TasksActions.UpdateTaskSuccess(task))
         .catch(err => new TasksActions.UpdateTaskError(err))
     )
   );
@@ -72,10 +70,7 @@ export class TasksEffects {
     concatMap((payload: Task) =>
       this.taskPromiseService
         .createTask(payload)
-        .then(task => {
-          this.router.navigate(['/home']);
-          return new TasksActions.CreateTaskSuccess(task);
-        })
+        .then(task => new TasksActions.CreateTaskSuccess(task))
         .catch(err => new TasksActions.CreateTaskError(err))
     )
   );
@@ -93,6 +88,20 @@ export class TasksEffects {
           }
         )
         .catch(err => new TasksActions.DeleteTaskError(err))
+    )
+  );
+
+  @Effect()
+  createUpdateTaskSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType<TasksActions.CreateTask | TasksActions.UpdateTask>(
+      TasksActions.TasksActionTypes.CREATE_TASK_SUCCESS,
+      TasksActions.TasksActionTypes.UPDATE_TASK_SUCCESS
+    ),
+    tap(
+      action =>
+        new RouterActions.Go({
+          path: ['/home']
+        })
     )
   );
 }

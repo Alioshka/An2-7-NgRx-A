@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 // @Ngrx
 import { Store, select } from '@ngrx/store';
 import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
-// import * as RouterActions from './../../+store/actions/router.actions';
+import * as RouterActions from './../../../core/+store/router/router.actions';
 import { AppState, getTasksData, getTasksError } from './../../../core/+store';
 
 // Rxjs
@@ -19,9 +19,7 @@ export class TaskListComponent implements OnInit {
   tasks$: Observable<ReadonlyArray<Task>>;
   tasksError$: Observable<Error | string>;
 
-  constructor(
-    private store: Store<AppState>
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
@@ -31,36 +29,28 @@ export class TaskListComponent implements OnInit {
     this.store.dispatch(new TasksActions.GetTasks());
   }
 
-  createTask() {
-    this.store.dispatch(new RouterActions.Go({
-      path: ['/add']
-    }));
-  //onCreateTask() {
- //   const link = ['/add'];
- //   this.router.navigate(link);
+  onCreateTask() {
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: ['/add']
+      })
+    );
   }
 
   onCompleteTask(task: Task): void {
-    const doneTask = {...task, done: true};
+    const doneTask = { ...task, done: true };
     this.store.dispatch(new TasksActions.UpdateTask(doneTask));
   }
 
-  deleteTask(task: Task) {
+  onEditTask(task: Task): void {
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: ['/edit', task.id]
+      })
+    );
+  }
+
+  onDeleteTask(task: Task) {
     this.store.dispatch(new TasksActions.DeleteTask(task));
   }
-
-  editTask(task: Task) {
-    this.store.dispatch(new RouterActions.Go({
-      path: ['/edit', task.id]
-    }));
-  }
-
- // onEditTask(task: Task): void {
- //   const link = ['/edit', task.id];
-  //  this.router.navigate(link);
- // }
-
-//  onDeleteTask(task: Task) {
- //   this.store.dispatch(new TasksActions.DeleteTask(task));
- // }
 }

@@ -4,8 +4,8 @@ import { Router, NavigationEnd } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from './+store';
-import * as RouterActions from './+store/actions/router.actions';
+import { AppState } from './core/+store';
+import * as RouterActions from './core/+store/router/router.actions';
 
 // rxjs
 import { Subscription } from 'rxjs/Subscription';
@@ -23,11 +23,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     public messagesService: MessagesService,
+    public spinnerService: SpinnerService,
     private titleService: Title,
     private metaService: Meta,
     private router: Router,
     private store: Store<AppState>
-    // public spinnerService: SpinnerService
   ) { }
 
   ngOnInit() {
