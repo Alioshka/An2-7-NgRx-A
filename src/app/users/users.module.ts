@@ -11,16 +11,16 @@ import { UsersAPIProvider } from './users.config';
 // ngrx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { UsersEffects, usersReducer } from './../+store';
+import { UsersEffects, usersReducer } from './../core/+store';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     UsersRoutingModule,
     StoreModule.forFeature('users', usersReducer),
     EffectsModule.forFeature([UsersEffects])
-    // SharedModule
   ],
   declarations: [
     usersRouterComponents,
