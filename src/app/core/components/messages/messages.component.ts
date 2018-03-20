@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from './../../../+store';
-import * as RouterActions from './../../../+store/actions/router.actions';
+import { AppState } from './../../+store';
+import * as RouterActions from './../../+store/router/router.actions';
 
-import { MessagesService } from './../../services';
+import { MessagesService } from './../../services/messages.service';
 
 @Component({
   selector: 'app-messages',
