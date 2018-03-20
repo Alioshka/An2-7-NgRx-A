@@ -8,17 +8,19 @@ const routes: Routes = [
   {
     path: 'home',
     component: TaskListComponent,
-    canActivate: [Guards.TasksStateLoadingGuard],
+    canActivate: [Guards.TasksStatePreloadingGuard],
     data: {
       title: 'Task Manager',
-      meta: [{
-        name: 'description',
-        content: 'Task Manager Application. This is an ASP application'
-      },
-      {
-        name: 'keywords',
-        content: 'Angular 4 tutorial, SPA Application, Routing'
-      }]
+      meta: [
+        {
+          name: 'description',
+          content: 'Task Manager Application. This is an ASP application'
+        },
+        {
+          name: 'keywords',
+          content: 'Angular 4 tutorial, SPA Application, Routing'
+        }
+      ]
     }
   },
   {
@@ -26,24 +28,15 @@ const routes: Routes = [
     component: TaskFormComponent
   },
   {
-    path: 'edit/:id',
+    path: 'edit/:taskID',
     component: TaskFormComponent,
     canActivate: [Guards.TaskExistGuard]
-    //path: 'edit/:taskID',
-    //component: TaskFormComponent
   }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes)
-  ],
-  providers: [
-    ...Guards.allGuards
-  ],
-  exports: [
-    RouterModule
-  ]
-  //exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  providers: [...Guards.allGuards],
+  exports: [RouterModule]
 })
-export class TasksRoutingModule { }
+export class TasksRoutingModule {}

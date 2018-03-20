@@ -23,23 +23,12 @@ export class TaskFormComponent implements OnInit {
 
   private sub: Subscription;
 
-  constructor(
-    private store: Store<AppState>
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.sub = this.store.select(getSelectedTaskByUrl)
-      .subscribe(task => this.task = task);
-    //this.sub = this.store
-     // .pipe(select(getSelectedTaskByUrl))
-     // .subscribe(task => (this.task = task));
-
-    //this.route.paramMap.subscribe(params => {
-    //  const id = params.get('taskID');
-     // if (id) {
-     //   this.store.dispatch(new TasksActions.GetTask(+id));
-     // }
-    //});
+    this.sub = this.store
+      .pipe(select(getSelectedTaskByUrl))
+      .subscribe(task => (this.task = task));
   }
 
   saveTask() {
@@ -53,8 +42,10 @@ export class TaskFormComponent implements OnInit {
   }
 
   goBack(): void {
-    this.store.dispatch(new RouterActions.Go({
-      path: ['/home']
-    }));
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: ['/home']
+      })
+    );
   }
 }

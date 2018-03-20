@@ -3,9 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UsersComponent, UserListComponent, UserFormComponent } from '.';
 
-import { CanDeactivateGuard } from './../shared/guards/can-deactivate.guard';
-import { UsersStateLoadingGuard } from './guards/users-state-loading.guard';
-// import { CanDeactivateGuard } from './../core';
+import { UsersStatePreloadingGuard } from './guards/users-state-preloading.guard';
+import { CanDeactivateGuard } from './../core';
 
 const routes: Routes = [
   {
@@ -19,32 +18,26 @@ const routes: Routes = [
       {
         path: 'edit/:userID',
         component: UserFormComponent,
-        canDeactivate: [CanDeactivateGuard],
+        canDeactivate: [CanDeactivateGuard]
       },
       {
         path: '',
         component: UserListComponent,
-        canActivate: [UsersStateLoadingGuard]
+        canActivate: [UsersStatePreloadingGuard]
       }
     ]
   }
 ];
 
-export let usersRouterComponents = [UsersComponent, UserListComponent, UserFormComponent];
-
+export let usersRouterComponents = [
+  UsersComponent,
+  UserListComponent,
+  UserFormComponent
+];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes)
-  ],
-  providers: [
-    CanDeactivateGuard,
-    UsersStateLoadingGuard
-  ],
-  exports: [
-    RouterModule
-  ]
-  //imports: [RouterModule.forChild(routes)],
-  //exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  providers: [CanDeactivateGuard, UsersStatePreloadingGuard],
+  exports: [RouterModule]
 })
 export class UsersRoutingModule {}
