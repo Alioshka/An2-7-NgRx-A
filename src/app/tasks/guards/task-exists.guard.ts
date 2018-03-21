@@ -18,7 +18,7 @@ export class TaskExistGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot) {
     return this.checkStore().pipe(
       switchMap(() => {
-        const id = +route.paramMap.get('id');
+        const id = +route.paramMap.get('taskID');
         return this.hasTask(id);
       })
     );
