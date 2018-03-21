@@ -1,9 +1,9 @@
 import { TaskExistGuard } from './task-exists.guard';
-import { TasksStateLoadingGuard } from './tasks-state-loading.guard';
+import { TasksStatePreloadingGuard } from './tasks-state-preloading.guard';
 
-export const allGuards: any[] = [TaskExistGuard, TasksStateLoadingGuard];
+export const allGuards: any[] = [TaskExistGuard, TasksStatePreloadingGuard];
 
 export * from './task-exists.guard';
-export * from './tasks-state-loading.guard';
+export * from './tasks-state-preloading.guard';
 
 
