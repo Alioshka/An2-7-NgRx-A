@@ -9,7 +9,7 @@ import * as RouterActions from './../router/router.actions';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
-import { pluck, concatMap, switchMap, tap } from 'rxjs/operators';
+import { pluck, concatMap, switchMap, map } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
 import { Task } from '../../../tasks/models/task.model';
@@ -97,7 +97,7 @@ export class TasksEffects {
       TasksActions.TasksActionTypes.CREATE_TASK_SUCCESS,
       TasksActions.TasksActionTypes.UPDATE_TASK_SUCCESS
     ),
-    tap(
+    map(
       action =>
         new RouterActions.Go({
           path: ['/home']
