@@ -130,5 +130,8 @@
     "@ngrx/schematics:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
   }
 }
