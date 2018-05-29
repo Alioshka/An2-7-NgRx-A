@@ -8,12 +8,15 @@ import * as UsersActions from './../../../core/+store/users/users.actions';
 import * as RouterActions from './../../../core/+store/router/router.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import {
+  AutoUnsubscribe,
+  DialogService,
+  CanComponentDeactivate
+} from './../../../core';
 import { User } from './../../models/user.model';
-import { DialogService, CanComponentDeactivate } from './../../../core';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -34,7 +37,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     });
   }
 
-  saveUser() {
+  onSaveUser() {
     const user = { ...this.user };
 
     if (user.id) {

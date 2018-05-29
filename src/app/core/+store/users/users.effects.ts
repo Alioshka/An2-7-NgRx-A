@@ -8,8 +8,7 @@ import * as UsersActions from './users.actions';
 import * as RouterActions from './../router/router.actions';
 
 // Rxjs
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, concatMap, pluck } from 'rxjs/operators';
 
 import { UserObservableService } from './../../../users/services';
@@ -102,7 +101,7 @@ export class UsersEffects {
     ),
     pluck('payload'),
     map((user: User) => {
-      const path = user.id ? ['/users', { editedUserId: user.id }] : ['/users'];
+      const path = user.id ? ['/users', { editedUserID: user.id }] : ['/users'];
       return new RouterActions.Go({ path });
     })
   );

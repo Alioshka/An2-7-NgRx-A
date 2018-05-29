@@ -13,19 +13,19 @@ import { MessagesService } from './../../services/messages.service';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-
   constructor(
     public messagesService: MessagesService,
     private store: Store<AppState>
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  close() {
-    this.store.dispatch(new RouterActions.Go({
-      path: [{ outlets: { popup: null } }]
-    }));
+  onClose() {
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: [{ outlets: { popup: null } }]
+      })
+    );
     this.messagesService.isDisplayed = false;
   }
 }

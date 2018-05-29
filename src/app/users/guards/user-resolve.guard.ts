@@ -8,9 +8,8 @@ import * as UsersActions from './../../core/+store/users/users.actions';
 import * as RouterActions from './../../core/+store/router/router.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { catchError, map, delay, tap, switchMap, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, delay, catchError, tap, finalize, take } from 'rxjs/operators';
 
 import { User } from './../models/user.model';
 import { SpinnerService } from '../../core';
@@ -30,25 +29,29 @@ export class UserResolveGuard implements Resolve<User> {
       select(getSelectedUserByUrl),
       tap(user => this.store.dispatch(new UsersActions.SetOriginalUser(user))),
       delay(2000),
-      switchMap(user => {
+      map(user => {
         if (user) {
-          return of(user);
+          return user;
         } else {
-          this.store.dispatch(new RouterActions.Go({
-            path: ['/users']
-          }));
-          return of(null);
+          this.store.dispatch(
+            new RouterActions.Go({
+              path: ['/users']
+            })
+          );
+          return null;
         }
       }),
-      tap(() => this.spinner.hide()),
       take(1),
       catchError(() => {
         this.spinner.hide();
-        this.store.dispatch(new RouterActions.Go({
-          path: ['/users']
-        }));
+        this.store.dispatch(
+          new RouterActions.Go({
+            path: ['/users']
+          })
+        );
         return of(null);
-      })
+      }),
+      finalize(() => this.spinner.hide())
     );
   }
 }

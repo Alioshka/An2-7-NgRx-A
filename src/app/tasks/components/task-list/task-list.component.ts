@@ -7,7 +7,7 @@ import * as RouterActions from './../../../core/+store/router/router.actions';
 import { AppState, getTasksData, getTasksError } from './../../../core/+store';
 
 // Rxjs
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Task } from './../../models/task.model';
 
@@ -23,8 +23,8 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-    this.tasks$ = this.store.pipe(select(getTasksData));
-    this.tasksError$ = this.store.pipe(select(getTasksError));
+    this.tasks$ = this.store.select(getTasksData);
+    this.tasksError$ = this.store.select(getTasksError);
 
     this.store.dispatch(new TasksActions.GetTasks());
   }
