@@ -3,7 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
-import { UsersRoutingModule, usersRouterComponents } from './users-routing.module';
+import {
+  UsersRoutingModule,
+  usersRouterComponents
+} from './users-routing.module';
 
 import { UserComponent, UserArrayService, UserObservableService } from '.';
 import { UsersAPIProvider } from './users.config';
@@ -22,14 +25,7 @@ import { UsersEffects, usersReducer } from './../core/+store';
     StoreModule.forFeature('users', usersReducer),
     EffectsModule.forFeature([UsersEffects])
   ],
-  declarations: [
-    usersRouterComponents,
-    UserComponent,
-  ],
-  providers: [
-    UserArrayService,
-    UserObservableService,
-    UsersAPIProvider
-  ]
+  declarations: [usersRouterComponents, UserComponent],
+  providers: [UserArrayService, UserObservableService, UsersAPIProvider]
 })
 export class UsersModule {}

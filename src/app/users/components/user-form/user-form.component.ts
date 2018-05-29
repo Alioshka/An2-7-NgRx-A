@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
@@ -12,14 +11,15 @@ import * as UsersActions from './../../../core/+store/users/users.actions';
 import * as RouterActions from './../../../core/+store/router/router.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { of } from 'rxjs/observable/of';
+import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import {
+  AutoUnsubscribe,
+  DialogService,
+  CanComponentDeactivate
+} from './../../../core';
 import { User } from './../../models/user.model';
-import { DialogService, CanComponentDeactivate } from './../../../core';
-import { AutoUnsubscribe } from './../../../core';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -41,7 +41,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
       .subscribe(user => this.user = user);
   }
 
-  saveUser() {
+  onSaveUser() {
     const user = { ...this.user };
 
     if (user.id) {

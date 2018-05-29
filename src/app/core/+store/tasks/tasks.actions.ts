@@ -7,9 +7,6 @@ export enum TasksActionTypes {
   GET_TASKS = '[Tasks] GET_TASKS',
   GET_TASKS_SUCCESS = '[Tasks] GET_TASKS_SUCCESS',
   GET_TASKS_ERROR = '[Tasks] GET_TASKS_ERROR',
-  GET_TASK = '[Tasks] GET_TASK',
-  GET_TASK_SUCCESS = '[Tasks] GET_TASK_SUCCESS',
-  GET_TASK_ERROR = '[Tasks] GET_TASK_ERROR',
   CREATE_TASK = '[Tasks] CREATE_TASK',
   CREATE_TASK_SUCCESS = '[Tasks] CREATE_TASK_SUCCESS',
   CREATE_TASK_ERROR = '[Tasks] CREATE_TASK_ERROR',
@@ -35,20 +32,7 @@ export class GetTasksError implements Action {
   constructor(public payload: Error | string) {}
 }
 
-export class GetTask implements Action {
-  readonly type = TasksActionTypes.GET_TASK;
-  constructor(public payload: number) {}
-}
 
-export class GetTaskSuccess implements Action {
-  readonly type = TasksActionTypes.GET_TASK_SUCCESS;
-  constructor(public payload: Task) {}
-}
-
-export class GetTaskError implements Action {
-  readonly type = TasksActionTypes.GET_TASK_ERROR;
-  constructor(public payload: Error | string) {}
-}
 
 export class CreateTask implements Action {
   readonly type = TasksActionTypes.CREATE_TASK;
@@ -99,9 +83,6 @@ export type TasksActions =
   | GetTasks
   | GetTasksSuccess
   | GetTasksError
-  | GetTask
-  | GetTaskSuccess
-  | GetTaskError
   | CreateTask
   | CreateTaskSuccess
   | CreateTaskError

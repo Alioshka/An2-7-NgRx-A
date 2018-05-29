@@ -6,7 +6,7 @@ import { AppState, getTasksLoaded, getTasksData } from './../../core/+store';
 import * as TasksActions from './../../core/+store/tasks/tasks.actions';
 import * as RouterActions from './../../core/+store/router/router.actions';
 
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Task } from './../models/task.model';
