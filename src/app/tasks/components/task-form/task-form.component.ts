@@ -4,12 +4,11 @@ import { Location } from '@angular/common';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState, getSelectedTask } from './../../../core/+store';
+import { AppState, TasksState } from './../../../core/+store';
 import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription } from 'rxjs';
 
 import { Task } from './../../models/task.model';
 import { AutoUnsubscribe } from '../../../core';
@@ -21,6 +20,7 @@ import { AutoUnsubscribe } from '../../../core';
 @AutoUnsubscribe()
 export class TaskFormComponent implements OnInit {
   task: Task;
+  tasksState$: Observable<TasksState>;
 
   private sub: Subscription;
 
@@ -31,13 +31,11 @@ export class TaskFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sub = this.store.pipe(select(getSelectedTask)).subscribe(task => {
-      if (task) {
-        this.task = task;
-      } else {
-        this.task = new Task(null, '', null, null);
-      }
-    });
+    this.task = new Task(null, '', null, null);
+
+    this.tasksState$ = this.store.pipe(select('tasks'));
+    this.sub = this.tasksState$.subscribe(tasksState =>
+      this.task = tasksState.selectedTask);
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('taskID');
@@ -47,7 +45,7 @@ export class TaskFormComponent implements OnInit {
     });
   }
 
-  saveTask() {
+  onSaveTask() {
     const task = { ...this.task };
 
     if (task.id) {
