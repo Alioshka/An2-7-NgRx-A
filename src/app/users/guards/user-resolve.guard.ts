@@ -7,9 +7,8 @@ import { AppState, getSelectedUserByUrl } from './../../core/+store';
 import * as UsersActions from './../../core/+store/users/users.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { catchError, map, delay, tap, switchMap, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, delay, catchError, tap, finalize, take } from 'rxjs/operators';
 
 import { User } from './../models/user.model';
 import { SpinnerService } from '../../core';
@@ -30,21 +29,20 @@ export class UserResolveGuard implements Resolve<User> {
       select(getSelectedUserByUrl),
       tap(user => this.store.dispatch(new UsersActions.SetOriginalUser(user))),
       delay(2000),
-      switchMap(user => {
+      map(user => {
         if (user) {
-          return of(user);
+          return user;
         } else {
           this.router.navigate(['/users']);
-          return of(null);
+          return null;
         }
       }),
-      tap(() => this.spinner.hide()),
       take(1),
       catchError(() => {
-        this.spinner.hide();
         this.router.navigate(['/users']);
         return of(null);
-      })
+      }),
+      finalize(() => this.spinner.hide())
     );
   }
 }

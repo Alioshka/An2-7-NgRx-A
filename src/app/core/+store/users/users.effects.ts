@@ -7,8 +7,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as UsersActions from './users.actions';
 
 // Rxjs
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, concatMap, pluck } from 'rxjs/operators';
 
 import { UserObservableService } from './../../../users/services';
@@ -55,7 +54,7 @@ export class UsersEffects {
   updateUser$: Observable<Action> = this.actions$.pipe(
     ofType<UsersActions.UpdateUser>(UsersActions.UsersActionTypes.UPDATE_USER),
     pluck('payload'),
-    concatMap((payload: User ) =>
+    concatMap((payload: User) =>
       this.userObservableService.updateUser(payload).pipe(
         map(user => {
           this.router.navigate(['/users', { editedUserID: user.id }]);

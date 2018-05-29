@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
 
 // ngrx
 import { Store, select } from '@ngrx/store';

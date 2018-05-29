@@ -7,8 +7,8 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as TasksActions from './tasks.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { pluck, concatMap, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { concatMap, pluck, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
 import { Task } from '../../../tasks/models/task.model';
@@ -35,18 +35,6 @@ export class TasksEffects {
         .getTasks()
         .then(tasks => new TasksActions.GetTasksSuccess(tasks))
         .catch(err => new TasksActions.GetTasksError(err))
-    )
-  );
-
-  @Effect()
-  getTask$: Observable<Action> = this.actions$.pipe(
-    ofType<TasksActions.GetTask>(TasksActions.TasksActionTypes.GET_TASK),
-    pluck('payload'),
-    switchMap(payload =>
-      this.taskPromiseService
-        .getTask(+payload)
-        .then(task => new TasksActions.GetTaskSuccess(task))
-        .catch(err => new TasksActions.GetTaskError(err))
     )
   );
 
