@@ -6,7 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState, TasksState } from './../../../core/+store';
 
 // Rxjs
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Task } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
