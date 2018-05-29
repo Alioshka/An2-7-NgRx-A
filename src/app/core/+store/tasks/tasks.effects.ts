@@ -6,7 +6,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as TasksActions from './tasks.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
