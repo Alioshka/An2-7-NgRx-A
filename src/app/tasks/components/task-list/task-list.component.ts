@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState, TasksState } from './../../../core/+store';
 import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
+import { AppState, TasksState, getTasksState } from './../../../core/+store';
 
 // Rxjs
 import { Observable } from 'rxjs';
 
 import { Task } from './../../models/task.model';
-import { TaskPromiseService } from './../../services';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -27,7 +26,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-    this.tasksState$ = this.store.pipe(select('tasks'));
+    this.tasksState$ = this.store.pipe(select(getTasksState));
 
     this.store.dispatch(new TasksActions.GetTasks());
   }
@@ -38,7 +37,8 @@ export class TaskListComponent implements OnInit {
   }
 
   onCompleteTask(task: Task): void {
-    this.store.dispatch(new TasksActions.DoneTask(task));
+    const doneTask = {...task, done: true};
+    this.store.dispatch(new TasksActions.UpdateTask(doneTask));
   }
 
   onEditTask(task: Task): void {
@@ -47,9 +47,6 @@ export class TaskListComponent implements OnInit {
   }
 
   onDeleteTask(task: Task) {
-    // this.taskPromiseService
-    //   .deleteTask(task)
-    //   .then(() => (this.tasks = this.tasks.filter(t => t.id !== task.id)))
-    //   .catch(err => console.log(err));
+    this.store.dispatch(new TasksActions.DeleteTask(task));
   }
 }

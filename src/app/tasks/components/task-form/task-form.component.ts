@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState, TasksState } from './../../../core/+store';
+import { AppState, TasksState, getTasksState } from './../../../core/+store';
 import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 
 // rxjs
@@ -31,11 +31,14 @@ export class TaskFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.task = new Task(null, '', null, null);
-
-    this.tasksState$ = this.store.pipe(select('tasks'));
-    this.sub = this.tasksState$.subscribe(tasksState =>
-      this.task = tasksState.selectedTask);
+    this.tasksState$ = this.store.pipe(select(getTasksState));
+    this.sub = this.tasksState$.subscribe(tasksState => {
+      if (tasksState.selectedTask) {
+        this.task = tasksState.selectedTask;
+      } else {
+        this.task = new Task(null, '', null, null);
+      }
+    });
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('taskID');
