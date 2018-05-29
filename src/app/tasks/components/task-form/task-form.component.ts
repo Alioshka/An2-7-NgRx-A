@@ -7,8 +7,7 @@ import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 import * as RouterActions from './../../../core/+store/router/router.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription } from 'rxjs';
 
 import { Task } from './../../models/task.model';
 import { AutoUnsubscribe } from '../../../core';
@@ -31,7 +30,7 @@ export class TaskFormComponent implements OnInit {
       .subscribe(task => (this.task = task));
   }
 
-  saveTask() {
+  onSaveTask() {
     const task = { ...this.task };
 
     if (task.id) {

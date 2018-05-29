@@ -7,7 +7,7 @@ import * as RouterActions from './../../../core/+store/router/router.actions';
 import { AppState, getTasksData, getTasksError } from './../../../core/+store';
 
 // Rxjs
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Task } from './../../models/task.model';
 

@@ -8,7 +8,7 @@ import { AppState } from './core/+store';
 import * as RouterActions from './core/+store/router/router.actions';
 
 // rxjs
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
 import { MessagesService, SpinnerService } from './core';
@@ -16,7 +16,7 @@ import { MessagesService, SpinnerService } from './core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
   private sub: Subscription;
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private metaService: Meta,
     private router: Router,
     private store: Store<AppState>
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.setPageTitlesAndMeta();
@@ -38,10 +38,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  displayMessages(): void {
-    this.store.dispatch(new RouterActions.Go({
-      path: [{ outlets: { popup: ['messages'] } }]
-    }));
+  onDisplayMessages(): void {
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: [{ outlets: { popup: ['messages'] } }]
+      })
+    );
     this.messagesService.isDisplayed = true;
   }
 
@@ -85,11 +87,9 @@ export class AppComponent implements OnInit, OnDestroy {
         filter(route => route.outlet === 'primary'),
         switchMap(route => route.data)
       )
-      .subscribe(
-      data => {
+      .subscribe(data => {
         this.titleService.setTitle(data['title']);
         this.metaService.addTags(data['meta']);
       });
   }
 }
-

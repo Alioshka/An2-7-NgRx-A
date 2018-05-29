@@ -5,8 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState, getUsersLoaded } from './../../core/+store';
 import * as UsersActions from './../../core/+store/users/users.actions';
 
-import { Observable } from 'rxjs/observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate, CanActivateChild, CanLoad, Router, Route,
+  CanActivate, CanActivateChild, CanLoad, Route,
   ActivatedRouteSnapshot, RouterStateSnapshot, NavigationExtras
 } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from './../+store';
 import * as RouterActions from './../+store/router/router.actions';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { AuthService } from './../services/auth.service';
 
@@ -17,7 +17,6 @@ import { AuthService } from './../services/auth.service';
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private authService: AuthService,
-    private router: Router,
     private store: Store<AppState>
   ) { }
 

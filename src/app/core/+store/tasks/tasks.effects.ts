@@ -8,8 +8,8 @@ import * as TasksActions from './tasks.actions';
 import * as RouterActions from './../router/router.actions';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
-import { pluck, concatMap, switchMap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { concatMap, map, pluck, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
 import { Task } from '../../../tasks/models/task.model';
@@ -36,18 +36,6 @@ export class TasksEffects {
         .getTasks()
         .then(tasks => new TasksActions.GetTasksSuccess(tasks))
         .catch(err => new TasksActions.GetTasksError(err))
-    )
-  );
-
-  @Effect()
-  getTask$: Observable<Action> = this.actions$.pipe(
-    ofType<TasksActions.GetTask>(TasksActions.TasksActionTypes.GET_TASK),
-    pluck('payload'),
-    switchMap(payload =>
-      this.taskPromiseService
-        .getTask(+payload)
-        .then(task => new TasksActions.GetTaskSuccess(task))
-        .catch(err => new TasksActions.GetTaskError(err))
     )
   );
 
