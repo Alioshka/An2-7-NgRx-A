@@ -7,7 +7,7 @@ import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 import { AppState, TasksState, getTasksState } from './../../../core/+store';
 
 // Rxjs
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Task } from './../../models/task.model';
 
