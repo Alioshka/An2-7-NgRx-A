@@ -49,7 +49,7 @@ export class TaskFormComponent implements OnInit {
 
   }
 
-  saveTask() {
+  onSaveTask() {
     const task = { ...this.task };
 
     const method = task.id ? 'updateTask' : 'createTask';
