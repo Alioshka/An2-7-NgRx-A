@@ -7,31 +7,21 @@ import { StoreModule } from '@ngrx/store';
 import { tasksReducer } from './../core/+store';
 
 import { TasksRoutingModule } from './tasks-routing.module';
-
 import {
-  TaskListComponent,
   TaskComponent,
   TaskFormComponent,
-  TaskArrayService,
+  TaskListComponent,
   TaskPromiseService
 } from '.';
 
-
 @NgModule({
-  declarations: [
-    TaskListComponent,
-    TaskComponent,
-    TaskFormComponent
-  ],
+  declarations: [TaskListComponent, TaskFormComponent, TaskComponent],
   imports: [
     CommonModule,
     FormsModule,
     TasksRoutingModule,
     StoreModule.forFeature('tasks', tasksReducer)
   ],
-  providers: [
-    TaskArrayService,
-    TaskPromiseService
-  ]
+  providers: [TaskPromiseService]
 })
 export class TasksModule {}
